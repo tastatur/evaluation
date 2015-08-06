@@ -26,6 +26,15 @@
                         </template>
                     </selectbox>
                 </hlayout>
+                <label>Bitte bewerte den Engine. Entsprach die Qualität der Anreicherung deinen Erwartungen? Was ist mit der Geschwindigkeit?</label>
+                <hlayout sclass="fn-subpanel">
+                    <label>Qualität der Anreicherung: </label>
+                    <slider/>
+                </hlayout>
+                <hlayout sclass="fn-subpanel">
+                    <label>Geschwindigkeitg: </label>
+                    <slider/>
+                </hlayout>
             </vlayout>
         </west>
         <center sclass="nested-center" vflex="min">

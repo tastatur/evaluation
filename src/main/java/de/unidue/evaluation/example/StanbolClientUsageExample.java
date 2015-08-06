@@ -30,7 +30,7 @@ public class StanbolClientUsageExample {
         final Map<String, String> snippets = new HashMap<>();
         searchResults.forEach(bingSnippet -> snippets.put(bingSnippet.getUrl(), bingSnippet.getDescription()));
 
-        //So bittest du Stanbol deine Suchergebnisse anzureichen.
+        //So bittest du Stanbol deine Suchergebnisse anzureichern.
         //Da wir mehrere Engines unterstützen, kannst du dem Stanbol auch mitteilen, welche Engine du testen möchtest
         //Es ist auch ganz nützlich, nur die Ergebnisse liefern zu lassen, wo Entitäten auch tatsächlich gefunden wurden.
         final Map<String, List<Entity>> entitesInSearchResults = stanbolClient.filterEmptyResults(stanbolClient.getEntitiesForSnippets(snippets,
