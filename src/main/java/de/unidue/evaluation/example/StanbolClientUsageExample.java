@@ -6,10 +6,12 @@ import de.unidue.misc.search.karatassis.BingWebResult;
 import de.unidue.proxyapi.connection.EnhancementClient;
 import de.unidue.proxyapi.connection.impl.StanbolClient;
 import de.unidue.proxyapi.data.entities.Entity;
+import de.unidue.proxyapi.util.EnhancementEngine;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Eine Beispielklasse, die dir zeigt, wie du die Stanbol-Bibliothek benutzen kannst
@@ -28,7 +30,28 @@ public class StanbolClientUsageExample {
         final Map<String, String> snippets = new HashMap<>();
         searchResults.forEach(bingSnippet -> snippets.put(bingSnippet.getUrl(), bingSnippet.getDescription()));
 
-        final Map<String, List<Entity>> entitesInSearchResults = stanbolClient.filterEmptyResults(stanbolClient.getEntitiesForSnippets(snippets));
+        //So bittest du Stanbol deine Suchergebnisse anzureichen.
+        //Da wir mehrere Engines unterstützen, kannst du dem Stanbol auch mitteilen, welche Engine du testen möchtest
+        //Es ist auch ganz nützlich, nur die Ergebnisse liefern zu lassen, wo Entitäten auch tatsächlich gefunden wurden.
+        final Map<String, List<Entity>> entitesInSearchResults = stanbolClient.filterEmptyResults(stanbolClient.getEntitiesForSnippets(snippets,
+                EnhancementEngine.STANFORD));
         System.out.println(entitesInSearchResults.size());
+
+        //Und so kannst du für jede Webseite über die verlinkte Entitäten iterieren.
+        //Da kannst du dir auch gleich den Sicherheitsgrad der Entität angucken, und bei Bedarf alle "unwichtige" Entitäten rausschmeisen.
+        entitesInSearchResults.forEach((url, entities) -> {
+            final List<Entity> importantEntities = entities.stream().filter(entity -> entity.getConfidence() >= 0.7).collect(Collectors.toList());
+            System.out.println(String.format("Auf der Seite %s wurden %d wichtigen Entitäten gefudnden", url, entities.size()));
+
+            //So arbeitest du mit Eigenschaften
+            //Wenn die Entität einen bekannten Typ macht, hat die eine bestimmte Klasse aus dem data Package
+            //Ansonsten wird die Basisklasse Entity verwendet
+            importantEntities.forEach(entity -> {
+                System.out.println(String.format("Abstract = %s", entity.getAbstract()));
+                entity.getAllProperties().forEach(prop -> {
+                    System.out.println(String.format("Property %s, Wert = %s", prop.getUri(), prop.getValue()));
+                });
+            });
+        });
     }
 }
