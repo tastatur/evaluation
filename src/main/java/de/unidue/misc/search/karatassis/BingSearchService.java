@@ -72,7 +72,7 @@ public final class BingSearchService {
 
     private String generateBingUrl(final String query) throws UnsupportedEncodingException {
         return BASE_URL.concat("?Query=").concat(encode(String.format("'%s'", query))).concat
-                ("&$format=JSON").concat("&Market=").concat(encode("'de-DE'"));
+                ("&$format=JSON").concat("&Market=").concat(encode("'de-DE'")).concat("&Latitude=52.5186&Longitude=13.4081");
     }
 
 

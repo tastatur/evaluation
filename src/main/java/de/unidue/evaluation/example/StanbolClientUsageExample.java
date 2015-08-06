@@ -23,12 +23,12 @@ public class StanbolClientUsageExample {
 
     public static void main(String[] argv) throws Exception {
         final EnhancementClient stanbolClient = StanbolClient.getInstance();
-        final List<BingWebResult> searchResults = BingSearchService.getInstance().executeSearchQuery("Präsident von Argentina");
+        final List<BingWebResult> searchResults = BingSearchService.getInstance().executeSearchQuery("Geburtstag von Angela Merkel");
 
         final Map<String, String> snippets = new HashMap<>();
         searchResults.forEach(bingSnippet -> snippets.put(bingSnippet.getUrl(), bingSnippet.getDescription()));
 
-        final Map<String, List<Entity>> entitesInSearchResults = stanbolClient.getEntitiesForSnippets(snippets);
+        final Map<String, List<Entity>> entitesInSearchResults = stanbolClient.filterEmptyResults(stanbolClient.getEntitiesForSnippets(snippets));
         System.out.println(entitesInSearchResults.size());
     }
 }
