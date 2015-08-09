@@ -5,50 +5,43 @@
         <north sclass="header" height="50px">
             <label sclass="header-text" multiline="true">
                 Hier kannst du die ausgewählte Anfrage an unseres System senden, und dich die Ergebnisse angucken.
-                Rechts könntest du die Anfrage stellen und rechts hast du die Liste von gefundenen ENtitäten.
+                Rechts könntest du die Anfrage stellen und rechts hast du die Liste von gefundenen Entitäten.
             </label>
         </north>
         <west vflex="1">
             <vlayout sclass="fn-panel1" hflex="1" vflex="1">
                 <hlayout sclass="fn-subpanel">
                     <label>Suchanfrage, die du stellen möchtest:</label>
-                    <selectbox model="@load(vm.searchQueries)">
+                    <selectbox model="@load(vm.searchQueries)" selectedItem="@bind(vm.searchQuery)">
                         <template name="model">
                             ${each}
                         </template>
                     </selectbox>
-                    <button label="Suchanfrage abschicken"/>
+                    <button label="Suchanfrage abschicken" onClick="@command('extractEntities')" autodisable="self"/>
                 </hlayout>
                 <label>Bitte bewerte den Engine. Entsprach die Qualität der Anreicherung deinen Erwartungen? Was ist mit der Geschwindigkeit?</label>
-                <grid>
-                    <rows>
-                        <row spans="5">Die Qualität - haben die extrahierte Entitäten dir bei deiner Suche helfen können?</row>
-                        <row>
-                            <radiogroup id="qualityRating" onCheck="@command('rateQuality', checked=self)">
-                                <radio label="1"/>
-                                <radio label="2"/>
-                                <radio label="3"/>
-                                <radio label="4"/>
-                                <radio label="5"/>
-                            </radiogroup>
-                        </row>
-                        <row spans="5">Die Geschwindigkeit - waren die Wartezeiten ertragbar?</row>
-                        <row>
-                            <radiogroup id="speedRating" onCheck="@command('rateSpeed', checked=self)">
-                                <radio label="1"/>
-                                <radio label="2"/>
-                                <radio label="3"/>
-                                <radio label="4"/>
-                                <radio label="5"/>
-                            </radiogroup>
-                        </row>
-                    </rows>
-                </grid>
+                <label>Die Qualität - haben die extrahierte Entitäten dir bei deiner Suche helfen können?</label>
+                <radiogroup id="qualityRating" onCheck="@command('rateQuality', checked=self)">
+                    <radio label="1"/>
+                    <radio label="2"/>
+                    <radio label="3"/>
+                    <radio label="4"/>
+                    <radio label="5"/>
+                </radiogroup>
+                <label>Die Geschwindigkeit - waren die Wartezeiten ertragbar?</label>
+                <radiogroup id="speedRating" onCheck="@command('rateSpeed', checked=self)">
+                    <radio label="1"/>
+                    <radio label="2"/>
+                    <radio label="3"/>
+                    <radio label="4"/>
+                    <radio label="5"/>
+                </radiogroup>
+                <button label="Bewerten und zum nachsten Engine wechseln"/>
             </vlayout>
         </west>
         <center sclass="nested-center" vflex="min">
             <hlayout spacing="0" height="400px">
-                <listbox sclass="entitylist" vflex="true" hflex="1">
+                <listbox model="@load(vm.extractedEntites)" sclass="entitylist" vflex="true" hflex="1">
                     <auxhead>
                         <auxheader colspan="3" class="topic">Extrahierte Entitäten</auxheader>
                     </auxhead>
@@ -57,6 +50,13 @@
                         <listheader label="Text" align="center"/>
                         <listheader label="Name der Entität" align="center"/>
                     </listhead>
+                    <template name="model" var="entityRepresentation" selectedItem="@bind(vm.selectedEntity)">
+                        <listitem>
+                            <listcell label="@load(entityRepresentation.siteUrl)"/>
+                            <listcell label="@load(entityRepresentation.snippetText)"/>
+                            <listcell label="@load(entityRepresentation.extractedEntity.getUri())"/>
+                        </listitem>
+                    </template>
                 </listbox>
                 <window sclass="card-pre" title="Entität" hflex="1" vflex="true" border="normal">
                     <listbox sclass="entityprops" vflex="true" hflex="1">
@@ -64,8 +64,8 @@
                             <auxheader colspan="3" class="topic">Eigenschaften der Entität</auxheader>
                         </auxhead>
                         <listhead>
-                            <listheader label="Name der Eigenschaft" width="80px" align="center"/>
-                            <listheader label="Wert der Eigenschaft" align="center"/>
+                            <listheader label="Name" width="80px" align="center"/>
+                            <listheader label="Wert" align="center"/>
                         </listhead>
                     </listbox>
                 </window>

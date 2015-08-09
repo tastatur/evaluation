@@ -14,7 +14,7 @@ import org.zkoss.zk.ui.Sessions;
 /**
  * Verwende Session, um zu gucken, auf welchem Schritt der Evaluierung steht jetzt der Benutzer
  */
-@Service("evalutionSessonService")
+@Service("evaluationSessonService")
 @Scope(value = "singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class EvalutionSessionServiceImpl implements EvaluationSessionService {
 

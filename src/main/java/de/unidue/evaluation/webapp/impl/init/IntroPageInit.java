@@ -12,15 +12,15 @@ import java.util.Map;
 public class IntroPageInit extends WiringVariablesInitiator {
 
     @WireVariable
-    private EvaluationSessionService evalutionSessonService;
+    private EvaluationSessionService evaluationSessonService;
 
     @Override
     public void doInit(Page page, Map<String, Object> map) throws Exception {
         super.doInit(page, map);
 
-        if (evalutionSessonService.isEvalutionFinished()) {
+        if (evaluationSessonService.isEvalutionFinished()) {
             Executions.sendRedirect("/finished.zul");
-        } else if (evalutionSessonService.isEvalutionRunning()) {
+        } else if (evaluationSessonService.isEvalutionRunning()) {
             Executions.sendRedirect("/engine.zul");
         }
     }

@@ -37,7 +37,11 @@
 
     <!-- [Optional] Session timeout -->
     <session-config>
-        <session-timeout>60</session-timeout>
+        <session-timeout>8600</session-timeout>
+        <cookie-config>
+            <max-age>2147483647</max-age>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
     </session-config>
 
     <!-- Spring configuration -->

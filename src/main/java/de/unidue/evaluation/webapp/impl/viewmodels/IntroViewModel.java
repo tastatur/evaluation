@@ -12,11 +12,11 @@ import java.io.Serializable;
 public class IntroViewModel implements Serializable {
 
     @WireVariable
-    private EvaluationSessionService evalutionSessonService;
+    private EvaluationSessionService evaluationSessonService;
 
     @Command
     public void startEvaluation() {
-        evalutionSessonService.startEvaluation();
+        evaluationSessonService.startEvaluation();
         Executions.sendRedirect("/engine.zul");
     }
 }
