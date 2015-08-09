@@ -17,16 +17,33 @@
                             ${each}
                         </template>
                     </selectbox>
+                    <button label="Suchanfrage abschicken"/>
                 </hlayout>
                 <label>Bitte bewerte den Engine. Entsprach die Qualität der Anreicherung deinen Erwartungen? Was ist mit der Geschwindigkeit?</label>
-                <hlayout sclass="fn-subpanel">
-                    <label>Qualität der Anreicherung: </label>
-                    <slider/>
-                </hlayout>
-                <hlayout sclass="fn-subpanel">
-                    <label>Geschwindigkeitgeit: </label>
-                    <slider/>
-                </hlayout>
+                <grid>
+                    <rows>
+                        <row spans="5">Die Qualität - haben die extrahierte Entitäten dir bei deiner Suche helfen können?</row>
+                        <row>
+                            <radiogroup id="qualityRating" onCheck="@command('rateQuality', checked=self)">
+                                <radio label="1"/>
+                                <radio label="2"/>
+                                <radio label="3"/>
+                                <radio label="4"/>
+                                <radio label="5"/>
+                            </radiogroup>
+                        </row>
+                        <row spans="5">Die Geschwindigkeit - waren die Wartezeiten ertragbar?</row>
+                        <row>
+                            <radiogroup id="speedRating" onCheck="@command('rateSpeed', checked=self)">
+                                <radio label="1"/>
+                                <radio label="2"/>
+                                <radio label="3"/>
+                                <radio label="4"/>
+                                <radio label="5"/>
+                            </radiogroup>
+                        </row>
+                    </rows>
+                </grid>
             </vlayout>
         </west>
         <center sclass="nested-center" vflex="min">

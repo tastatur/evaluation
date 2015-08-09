@@ -89,5 +89,11 @@
             <artifactId>zkplus</artifactId>
             <version>${zk.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-async</artifactId>
+            <version>3.0.2</version>
+        </dependency>
     </dependencies>
 </project>
