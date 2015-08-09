@@ -1,0 +1,58 @@
+<?init class="de.unidue.evaluation.webapp.impl.init.EnginePageInit"?>
+<?link rel="stylesheet" type="text/css" href="/style.css"?>
+<zk>
+    <borderlayout apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.unidue.evaluation.webapp.impl.viewmodels.EngineViewModel')">
+        <north sclass="header" height="50px">
+            <label sclass="header-text" multiline="true">
+                Hier kannst du die ausgewählte Anfrage an unseres System senden, und dich die Ergebnisse angucken.
+                Rechts könntest du die Anfrage stellen und rechts hast du die Liste von gefundenen ENtitäten.
+            </label>
+        </north>
+        <west vflex="1">
+            <vlayout sclass="fn-panel1" hflex="1" vflex="1">
+                <hlayout sclass="fn-subpanel">
+                    <label>Suchanfrage, die du stellen möchtest:</label>
+                    <selectbox model="@load(vm.searchQueries)">
+                        <template name="model">
+                            ${each}
+                        </template>
+                    </selectbox>
+                </hlayout>
+                <label>Bitte bewerte den Engine. Entsprach die Qualität der Anreicherung deinen Erwartungen? Was ist mit der Geschwindigkeit?</label>
+                <hlayout sclass="fn-subpanel">
+                    <label>Qualität der Anreicherung: </label>
+                    <slider/>
+                </hlayout>
+                <hlayout sclass="fn-subpanel">
+                    <label>Geschwindigkeitgeit: </label>
+                    <slider/>
+                </hlayout>
+            </vlayout>
+        </west>
+        <center sclass="nested-center" vflex="min">
+            <hlayout spacing="0" height="400px">
+                <listbox sclass="entitylist" vflex="true" hflex="1">
+                    <auxhead>
+                        <auxheader colspan="3" class="topic">Extrahierte Entitäten</auxheader>
+                    </auxhead>
+                    <listhead>
+                        <listheader label="Webseite" width="80px" align="center"/>
+                        <listheader label="Text" align="center"/>
+                        <listheader label="Name der Entität" align="center"/>
+                    </listhead>
+                </listbox>
+                <window sclass="card-pre" title="Entität" hflex="1" vflex="true" border="normal">
+                    <listbox sclass="entityprops" vflex="true" hflex="1">
+                        <auxhead>
+                            <auxheader colspan="3" class="topic">Eigenschaften der Entität</auxheader>
+                        </auxhead>
+                        <listhead>
+                            <listheader label="Name der Eigenschaft" width="80px" align="center"/>
+                            <listheader label="Wert der Eigenschaft" align="center"/>
+                        </listhead>
+                    </listbox>
+                </window>
+            </hlayout>
+        </center>
+    </borderlayout>
+</zk>

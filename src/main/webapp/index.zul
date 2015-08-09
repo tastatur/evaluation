@@ -1,76 +1,34 @@
+<?init class="de.unidue.evaluation.webapp.impl.init.IntroPageInit"?>
 <?link rel="stylesheet" type="text/css" href="/style.css"?>
 <zk>
-    <zscript>
-        <![CDATA[
-           String[] engines = { "Stanford", "PIG", "TIGER"};
-           ListModelList enginesModel = new ListModelList(engines);
-        ]]>
-    </zscript>
-    <style src="/widgets/getting_started/layout/style.css"/>
-    <borderlayout vflex="min">
-        <north sclass="header" height="50px">
-            <label sclass="header-text">Extraktion von Entitäten aus Suchergebnisseiten</label>
-        </north>
-        <west vflex="1">
-            <vlayout sclass="fn-panel1" hflex="1" vflex="1">
-                <label sclass="fn-title">Bitte gebe deine Suchanfrage ein:</label>
-                <hlayout sclass="fn-subpanel">
-                    <label>Suchanfrage:</label>
-                    <textbox id="searchQueryBox" constraint="no empty"/>
-                </hlayout>
-                <hlayout sclass="fn-subpanel">
-                    <label>Suchengine, die du bewerten möchtest:</label>
-                    <selectbox model="${enginesModel}">
-                        <template name="enginesModel">
-                            ${each}
-                        </template>
-                    </selectbox>
-                </hlayout>
-                <label>Bitte bewerte den Engine. Entsprach die Qualität der Anreicherung deinen Erwartungen? Was ist mit der Geschwindigkeit?</label>
-                <hlayout sclass="fn-subpanel">
-                    <label>Qualität der Anreicherung: </label>
-                    <slider/>
-                </hlayout>
-                <hlayout sclass="fn-subpanel">
-                    <label>Geschwindigkeitg: </label>
-                    <slider/>
-                </hlayout>
-            </vlayout>
-        </west>
-        <center sclass="nested-center" vflex="min">
-            <hlayout spacing="0" height="400px">
-                <listbox sclass="entitylist" vflex="true" hflex="1">
-                    <auxhead>
-                        <auxheader colspan="3" class="topic">Extrahierte Entitäten</auxheader>
-                    </auxhead>
-                    <listhead>
-                        <listheader label="Webseite" width="80px" align="center"/>
-                        <listheader label="Text" align="center"/>
-                        <listheader label="Name der Entität" align="center"/>
-                    </listhead>
-                    <listitem>
-                        <listcell label="http://test.com"/>
-                        <listcell label="Text des Snippets"/>
-                        <listcell label="Deutschland"/>
-                    </listitem>
+    <borderlayout apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.unidue.evaluation.webapp.impl.viewmodels.IntroViewModel')">
+        <center>
+            <vlayout>
+                <label multiline="true">
+                    Herzlich willkommen in die Evaluierung der Extraktion von Entitäten aus Suchergebnissen!
 
-                </listbox>
-                <window sclass="card-pre" title="Entität" hflex="1" vflex="true" border="normal">
-                    <listbox sclass="entityprops" vflex="true" hflex="1">
-                        <auxhead>
-                            <auxheader colspan="3" class="topic">Eigenschaften der Entität</auxheader>
-                        </auxhead>
-                        <listhead>
-                            <listheader label="Name der Eigenschaft" width="80px" align="center"/>
-                            <listheader label="Wert der Eigenschaft" align="center"/>
-                        </listhead>
-                        <listitem>
-                            <listcell label="populationDensity"/>
-                            <listcell label="226.0"/>
-                        </listitem>
-                    </listbox>
-                </window>
-            </hlayout>
+                    Was ist denn diese "Extraktion von Entitäten aus Suchergebnissen"? Eine Entität ist nichts weiteres, als ein Objekt aus der
+                    echten
+                    Welt - eine Person wie Angela Merkel ist eine Entität, oder eine Stadt wie Duisburg.
+
+                    Die Extraktion von Entitäten besteht darin, dass wir irgendein Text nehmen, und in diesem Text nach Entitäten suchen.
+
+                    Unsere Idee besteht darin, dass wir mit Hilfe von dieser "Extraktion von Entitäten" dir beim Googeln zu helfen versuchen -
+                    wenn
+                    du eine Suchanfrage eingibst, bearbeiten wir die Ergebnisse, die Suchmachiene uns liefert, und versuchen in den Ergebnissen
+                    die
+                    wichtigste Entitäten zu finden, damit wir dir einen Überblick über gefundene Personen, Firmen, Länder usw. geben könnten.
+
+                    Es gibt verschiedene Möglichkeiten, wie das gemacht werden kann, darum bitten wir dich, verschiedene Einsätze zur Extraktion
+                    von Entitäten auszuprobieren, und die zu bewerten.
+
+                    Damit wir die Ergebnisse besser auswerten könnten, gibt es eine begrenzte Anzahl von Fragen, die du stellen könntest. Aber
+                    nach
+                    der Evaluierung bekommst du die Möglichkeit, jede beliebige Suchanfrage einzugeben, und einen Feedback an uns zu senden, falls
+                    du möchtest.
+                </label>
+                <button label="Die Evaluierung starten" onClick="@command('startEvaluation')"/>
+            </vlayout>
         </center>
     </borderlayout>
 </zk>
