@@ -80,6 +80,12 @@
                             <listheader label="Name" align="center"/>
                             <listheader label="Wert" align="center"/>
                         </listhead>
+                        <template name="model" var="prop">
+                            <listitem>
+                                <listcell label="@load(prop.getUri())"/>
+                                <listcell label="@load(prop.getValue())"/>
+                            </listitem>
+                        </template>
                     </listbox>
                 </hlayout>
             </vlayout>
