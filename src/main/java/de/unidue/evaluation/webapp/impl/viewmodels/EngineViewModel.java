@@ -2,16 +2,14 @@ package de.unidue.evaluation.webapp.impl.viewmodels;
 
 import de.unidue.evaluation.webapp.AvailableQueriesService;
 import de.unidue.evaluation.webapp.EntityExtractionService;
-import de.unidue.evaluation.webapp.data.FlatEntityRepresentation;
+import de.unidue.evaluation.webapp.data.EntityExtractionRepresentation;
 import de.unidue.proxyapi.data.entities.Entity;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
-import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Radiogroup;
-import org.zkoss.zul.Window;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,9 +20,10 @@ public class EngineViewModel implements Serializable {
 
     private Integer qualityOfEngine = 1;
     private Integer speedOfEngine = 1;
-    private List<FlatEntityRepresentation> extractedEntites = new ArrayList<>();
-    private Entity selectedEntity;
     private String searchQuery;
+    private List<EntityExtractionRepresentation> snippets = new ArrayList<>();
+    private EntityExtractionRepresentation selectedSnippet = new EntityExtractionRepresentation();
+    private Entity selectedEntity;
 
     @WireVariable
     private AvailableQueriesService availableQueriesService;
@@ -43,21 +42,9 @@ public class EngineViewModel implements Serializable {
     }
 
     @Command
-    @NotifyChange("extractedEntites")
+    @NotifyChange("snippets")
     public void extractEntities() throws Exception {
-        extractedEntites = entityExtractionService.getEntitiesForSearchQuery(searchQuery);
-    }
-
-    public List<FlatEntityRepresentation> getExtractedEntites() {
-        return extractedEntites;
-    }
-
-    public Entity getSelectedEntity() {
-        return selectedEntity;
-    }
-
-    public void setSelectedEntity(Entity selectedEntity) {
-        this.selectedEntity = selectedEntity;
+        snippets = entityExtractionService.getEntitiesForSearchQuery(getSearchQuery());
     }
 
     public List<String> getSearchQueries() {
@@ -70,5 +57,29 @@ public class EngineViewModel implements Serializable {
 
     public void setSearchQuery(String searchQuery) {
         this.searchQuery = searchQuery;
+    }
+
+    public List<EntityExtractionRepresentation> getSnippets() {
+        return snippets;
+    }
+
+    public void setSnippets(List<EntityExtractionRepresentation> snippets) {
+        this.snippets = snippets;
+    }
+
+    public EntityExtractionRepresentation getSelectedSnippet() {
+        return selectedSnippet;
+    }
+
+    public void setSelectedSnippet(EntityExtractionRepresentation selectedSnippet) {
+        this.selectedSnippet = selectedSnippet;
+    }
+
+    public Entity getSelectedEntity() {
+        return selectedEntity;
+    }
+
+    public void setSelectedEntity(Entity selectedEntity) {
+        this.selectedEntity = selectedEntity;
     }
 }

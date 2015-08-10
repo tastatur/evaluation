@@ -3,12 +3,13 @@ package de.unidue.evaluation.webapp.data;
 import de.unidue.proxyapi.data.entities.Entity;
 
 import java.io.Serializable;
+import java.util.List;
 
-public class FlatEntityRepresentation implements Serializable {
+public class EntityExtractionRepresentation implements Serializable {
 
     private String siteUrl;
     private String snippetText;
-    private Entity extractedEntity;
+    private List<Entity> extractedEntities;
 
     public String getSiteUrl() {
         return siteUrl;
@@ -26,11 +27,11 @@ public class FlatEntityRepresentation implements Serializable {
         this.snippetText = snippetText;
     }
 
-    public Entity getExtractedEntity() {
-        return extractedEntity;
+    public List<Entity> getExtractedEntities() {
+        return extractedEntities;
     }
 
-    public void setExtractedEntity(Entity extractedEntity) {
-        this.extractedEntity = extractedEntity;
+    public void setExtractedEntities(List<Entity> extractedEntities) {
+        this.extractedEntities = extractedEntities;
     }
 }

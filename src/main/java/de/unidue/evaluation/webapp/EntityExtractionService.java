@@ -1,6 +1,6 @@
 package de.unidue.evaluation.webapp;
 
-import de.unidue.evaluation.webapp.data.FlatEntityRepresentation;
+import de.unidue.evaluation.webapp.data.EntityExtractionRepresentation;
 
 import java.util.List;
 
@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface EntityExtractionService {
 
-    List<FlatEntityRepresentation> getEntitiesForSearchQuery(String searchQuery) throws Exception;
+    List<EntityExtractionRepresentation> getEntitiesForSearchQuery(String searchQuery) throws Exception;
 }

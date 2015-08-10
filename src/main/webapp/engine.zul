@@ -40,36 +40,49 @@
             </vlayout>
         </west>
         <center sclass="nested-center" vflex="min">
-            <hlayout spacing="0" height="400px">
-                <listbox model="@load(vm.extractedEntites)" sclass="entitylist" vflex="true" hflex="1">
-                    <auxhead>
-                        <auxheader colspan="3" class="topic">Extrahierte Entitäten</auxheader>
-                    </auxhead>
-                    <listhead>
-                        <listheader label="Webseite" width="80px" align="center"/>
-                        <listheader label="Text" align="center"/>
-                        <listheader label="Name der Entität" align="center"/>
-                    </listhead>
-                    <template name="model" var="entityRepresentation" selectedItem="@bind(vm.selectedEntity)">
-                        <listitem>
-                            <listcell label="@load(entityRepresentation.siteUrl)"/>
-                            <listcell label="@load(entityRepresentation.snippetText)"/>
-                            <listcell label="@load(entityRepresentation.extractedEntity.getUri())"/>
-                        </listitem>
-                    </template>
-                </listbox>
-                <window sclass="card-pre" title="Entität" hflex="1" vflex="true" border="normal">
-                    <listbox sclass="entityprops" vflex="true" hflex="1">
+            <vlayout spacing="0">
+                <hlayout spacing="0" height="400px">
+                    <listbox model="@load(vm.snippets)" selectedItem="@bind(vm.selectedSnippet)" vflex="true" hflex="1">
                         <auxhead>
-                            <auxheader colspan="3" class="topic">Eigenschaften der Entität</auxheader>
+                            <auxheader colspan="3" class="topic">Gefundene Webseiten</auxheader>
                         </auxhead>
                         <listhead>
-                            <listheader label="Name" width="80px" align="center"/>
+                            <listheader label="Webseite" align="center"/>
+                            <listheader label="Text" align="center"/>
+                        </listhead>
+                        <template name="model" var="snippet">
+                            <listitem>
+                                <listcell label="@load(snippet.siteUrl)"/>
+                                <listcell label="@load(snippet.snippetText)"/>
+                            </listitem>
+                        </template>
+                    </listbox>
+                    <listbox model="@load(vm.selectedSnippet.extractedEntities)" selectedItem="@bind(vm.selectedEntity)" vflex="true" hflex="1">
+                        <auxhead>
+                            <auxheader class="topic">Auf der Webseite gefundene Entitäten</auxheader>
+                        </auxhead>
+                        <listhead>
+                            <listheader label="Name" align="center"/>
+                        </listhead>
+                        <template name="model" var="entity">
+                            <listitem>
+                                <listcell label="@load(entity.getUri())"/>
+                            </listitem>
+                        </template>
+                    </listbox>
+                </hlayout>
+                <hlayout spacing="0" height="400px">
+                    <listbox model="@load(vm.selectedEntity.getAllProperties())" vflex="true" hflex="1">
+                        <auxhead>
+                            <auxheader>Eigenschaften der Entität</auxheader>
+                        </auxhead>
+                        <listhead>
+                            <listheader label="Name" align="center"/>
                             <listheader label="Wert" align="center"/>
                         </listhead>
                     </listbox>
-                </window>
-            </hlayout>
+                </hlayout>
+            </vlayout>
         </center>
     </borderlayout>
 </zk>

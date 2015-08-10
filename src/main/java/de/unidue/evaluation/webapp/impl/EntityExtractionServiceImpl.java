@@ -2,7 +2,7 @@ package de.unidue.evaluation.webapp.impl;
 
 import de.unidue.evaluation.webapp.EntityExtractionService;
 import de.unidue.evaluation.webapp.EvaluationSessionService;
-import de.unidue.evaluation.webapp.data.FlatEntityRepresentation;
+import de.unidue.evaluation.webapp.data.EntityExtractionRepresentation;
 import de.unidue.misc.search.karatassis.BingSearchService;
 import de.unidue.misc.search.karatassis.BingWebResult;
 import de.unidue.proxyapi.connection.EnhancementClient;
@@ -29,7 +29,7 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
     private EvaluationSessionService evaluationSessionService;
 
     @Override
-    public List<FlatEntityRepresentation> getEntitiesForSearchQuery(String searchQuery) throws Exception {
+    public List<EntityExtractionRepresentation> getEntitiesForSearchQuery(String searchQuery) throws Exception {
         final List<BingWebResult> searchResults = searchService.executeSearchQuery(searchQuery);
         final Map<String, String> snippets = new HashMap<>();
         searchResults.forEach(bingSnippet -> snippets.put(bingSnippet.getUrl(), bingSnippet.getDescription()));
@@ -37,22 +37,18 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
         final Map<String, List<Entity>> entitesInSearchResults = stanbolClient.filterEmptyResults(stanbolClient.getEntitiesForSnippets(snippets,
                 evaluationSessionService.getCurrentEngine()));
 
-        return transformToFlatRepresentation(snippets, entitesInSearchResults);
+        return transformApiResultsForView(snippets, entitesInSearchResults);
     }
 
-    private List<FlatEntityRepresentation> transformToFlatRepresentation(Map<String, String> snippets, Map<String, List<Entity>> entitesInSearchResults) {
-        final List<FlatEntityRepresentation> flatEntityRepresentations = new ArrayList<>();
-        snippets.forEach((url, snippet) -> {
-            if (entitesInSearchResults.containsKey(url)) {
-                entitesInSearchResults.get(url).forEach(entity -> {
-                    final FlatEntityRepresentation flatEntity = new FlatEntityRepresentation();
-                    flatEntity.setSiteUrl(url);
-                    flatEntity.setSnippetText(snippet);
-                    flatEntity.setExtractedEntity(entity);
-                    flatEntityRepresentations.add(flatEntity);
-                });
-            }
+    private List<EntityExtractionRepresentation> transformApiResultsForView(Map<String, String> snippets, Map<String, List<Entity>> entitesInSearchResults) {
+        final List<EntityExtractionRepresentation> extractedEntities = new ArrayList<>();
+        entitesInSearchResults.forEach((url, entities) -> {
+            final EntityExtractionRepresentation extractionResult = new EntityExtractionRepresentation();
+            extractionResult.setSiteUrl(url);
+            extractionResult.setSnippetText(snippets.get(url));
+            extractionResult.setExtractedEntities(entities);
+            extractedEntities.add(extractionResult);
         });
-        return flatEntityRepresentations;
+        return extractedEntities;
     }
 }
