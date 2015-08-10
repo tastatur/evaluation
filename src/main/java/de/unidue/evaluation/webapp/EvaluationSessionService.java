@@ -1,5 +1,6 @@
 package de.unidue.evaluation.webapp;
 
+import com.sun.istack.internal.NotNull;
 import de.unidue.proxyapi.util.EnhancementEngine;
 
 /**
@@ -21,12 +22,27 @@ public interface EvaluationSessionService {
 
     /**
      * Falls die Evaluierung läuft, was für Engine soll jetzt gerade bewertet werden?
-     * @return
+     * @return Der Engine, der jetzt verwendet werden soll
      */
     EnhancementEngine getCurrentEngine();
+
+    /**
+     * Setzt den Evaluierung-Engine
+     */
+    void setCurrentEngine(@NotNull EnhancementEngine engine);
 
     /**
      * Starte die Evalution
      */
     void startEvaluation();
+
+    /**
+     * Gehe zum nächsten Schritt der Evaluierung.
+     */
+    void nextEngine();
+
+    /**
+     * Beende die Evaluierung
+     */
+    void finishEvaluation();
 }

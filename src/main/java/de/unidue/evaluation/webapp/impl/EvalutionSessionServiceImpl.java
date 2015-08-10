@@ -1,5 +1,6 @@
 package de.unidue.evaluation.webapp.impl;
 
+import com.sun.istack.internal.NotNull;
 import de.unidue.evaluation.webapp.EnhancementEngineService;
 import de.unidue.evaluation.webapp.EvaluationSessionService;
 import de.unidue.evaluation.webapp.SessionAttributes;
@@ -41,8 +42,33 @@ public class EvalutionSessionServiceImpl implements EvaluationSessionService {
     }
 
     @Override
+    public void setCurrentEngine(@NotNull EnhancementEngine engine) {
+        Sessions.getCurrent().setAttribute(SessionAttributes.CURRENT_ENGINE.name(), engine);
+    }
+
+    @Override
     public void startEvaluation() {
         Sessions.getCurrent().setAttribute(SessionAttributes.EVALUATION_STARTED.name(), true);
-        Sessions.getCurrent().setAttribute(SessionAttributes.CURRENT_ENGINE.name(), enhancementEngineService.getFirstEngine());
+        setCurrentEngine(enhancementEngineService.getFirstEngine());
+    }
+
+    @Override
+    public void nextEngine() {
+        if (isEvalutionFinished()) {
+            return;
+        }
+
+        final EnhancementEngine nextEngine = enhancementEngineService.getNextEngine(getCurrentEngine());
+        if (nextEngine != null) {
+            setCurrentEngine(nextEngine);
+        } else {
+            finishEvaluation();
+        }
+    }
+
+    @Override
+    public void finishEvaluation() {
+        Sessions.getCurrent().setAttribute(SessionAttributes.EVALUATION_STARTED.name(), false);
+        Sessions.getCurrent().setAttribute(SessionAttributes.EVALUATION_FINISHED.name(), true);
     }
 }

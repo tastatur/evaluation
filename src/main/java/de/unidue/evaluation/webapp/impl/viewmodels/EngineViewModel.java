@@ -2,13 +2,16 @@ package de.unidue.evaluation.webapp.impl.viewmodels;
 
 import de.unidue.evaluation.webapp.AvailableQueriesService;
 import de.unidue.evaluation.webapp.EntityExtractionService;
+import de.unidue.evaluation.webapp.EvaluationSessionService;
 import de.unidue.evaluation.webapp.data.EntityExtractionRepresentation;
 import de.unidue.proxyapi.data.entities.Entity;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
+import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Radiogroup;
 
 import java.io.Serializable;
@@ -31,6 +34,9 @@ public class EngineViewModel implements Serializable {
     @WireVariable
     private EntityExtractionService entityExtractionService;
 
+    @WireVariable
+    private EvaluationSessionService evaluationSessonService;
+
     @Command
     public void rateQuality(@BindingParam("checked") Radiogroup qualityRadioGroup) {
         qualityOfEngine = Integer.valueOf(qualityRadioGroup.getSelectedItem().getLabel());
@@ -45,6 +51,16 @@ public class EngineViewModel implements Serializable {
     @NotifyChange("snippets")
     public void extractEntities() throws Exception {
         snippets = entityExtractionService.getEntitiesForSearchQuery(getSearchQuery());
+    }
+
+    @Command
+    public void nextEngine() {
+        evaluationSessonService.nextEngine();
+        if (evaluationSessonService.isEvalutionFinished()) {
+            Executions.sendRedirect("/finished.zul");
+        } else {
+            Clients.showNotification("Danke für die Bewertung, bitte bewerte jetzt nächsten Engine.");
+        }
     }
 
     public List<String> getSearchQueries() {

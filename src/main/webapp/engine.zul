@@ -36,7 +36,7 @@
                     <radio label="4"/>
                     <radio label="5"/>
                 </radiogroup>
-                <button label="Bewerten und zum nachsten Engine wechseln"/>
+                <button label="Bewerten und zum nachsten Engine wechseln" onClick="@command('nextEngine')"/>
             </vlayout>
         </west>
         <center sclass="nested-center" vflex="min">
