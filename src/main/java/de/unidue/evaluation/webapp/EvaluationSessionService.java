@@ -1,6 +1,5 @@
 package de.unidue.evaluation.webapp;
 
-import com.sun.istack.internal.NotNull;
 import de.unidue.proxyapi.util.EnhancementEngine;
 
 /**
@@ -10,18 +9,21 @@ public interface EvaluationSessionService {
 
     /**
      * Läüft gerade eine Evaluierunbg?
+     *
      * @return ob es eine Evaluierung gestartet wurde
      */
     Boolean isEvalutionRunning();
 
     /**
      * Ob die Evaluiton beendet wurde
+     *
      * @return true, wenn die Evalution beendet wurde
      */
     Boolean isEvalutionFinished();
 
     /**
      * Falls die Evaluierung läuft, was für Engine soll jetzt gerade bewertet werden?
+     *
      * @return Der Engine, der jetzt verwendet werden soll
      */
     EnhancementEngine getCurrentEngine();
@@ -29,7 +31,7 @@ public interface EvaluationSessionService {
     /**
      * Setzt den Evaluierung-Engine
      */
-    void setCurrentEngine(@NotNull EnhancementEngine engine);
+    void setCurrentEngine(EnhancementEngine engine);
 
     /**
      * Starte die Evalution
@@ -45,4 +47,6 @@ public interface EvaluationSessionService {
      * Beende die Evaluierung
      */
     void finishEvaluation();
+
+    String getSessionId();
 }

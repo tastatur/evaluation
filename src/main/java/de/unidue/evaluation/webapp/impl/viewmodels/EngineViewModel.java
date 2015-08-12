@@ -3,6 +3,7 @@ package de.unidue.evaluation.webapp.impl.viewmodels;
 import de.unidue.evaluation.webapp.AvailableQueriesService;
 import de.unidue.evaluation.webapp.EntityExtractionService;
 import de.unidue.evaluation.webapp.EvaluationSessionService;
+import de.unidue.evaluation.webapp.data.EngineRatingService;
 import de.unidue.evaluation.webapp.data.EntityExtractionRepresentation;
 import de.unidue.proxyapi.data.entities.Entity;
 import de.unidue.proxyapi.util.EnhancementEngine;
@@ -38,6 +39,9 @@ public class EngineViewModel implements Serializable {
     @WireVariable
     private EvaluationSessionService evaluationSessonService;
 
+    @WireVariable
+    private EngineRatingService engineRatingService;
+
     @Command
     public void rateQuality(@BindingParam("checked") Radiogroup qualityRadioGroup) {
         qualityOfEngine = Integer.valueOf(qualityRadioGroup.getSelectedItem().getLabel());
@@ -57,6 +61,7 @@ public class EngineViewModel implements Serializable {
     @Command
     @NotifyChange("*")
     public void nextEngine() {
+        engineRatingService.rateEngine(evaluationSessonService.getCurrentEngine(), qualityOfEngine, speedOfEngine);
         evaluationSessonService.nextEngine();
         if (evaluationSessonService.isEvalutionFinished()) {
             Executions.sendRedirect("/finished.zul");

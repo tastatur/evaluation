@@ -1,6 +1,5 @@
 package de.unidue.evaluation.webapp.impl;
 
-import com.sun.istack.internal.NotNull;
 import de.unidue.evaluation.webapp.EnhancementEngineService;
 import de.unidue.evaluation.webapp.EvaluationSessionService;
 import de.unidue.evaluation.webapp.SessionAttributes;
@@ -11,6 +10,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Verwende Session, um zu gucken, auf welchem Schritt der Evaluierung steht jetzt der Benutzer
@@ -42,7 +43,7 @@ public class EvalutionSessionServiceImpl implements EvaluationSessionService {
     }
 
     @Override
-    public void setCurrentEngine(@NotNull EnhancementEngine engine) {
+    public void setCurrentEngine(EnhancementEngine engine) {
         Sessions.getCurrent().setAttribute(SessionAttributes.CURRENT_ENGINE.name(), engine);
     }
 
@@ -70,5 +71,10 @@ public class EvalutionSessionServiceImpl implements EvaluationSessionService {
     public void finishEvaluation() {
         Sessions.getCurrent().setAttribute(SessionAttributes.EVALUATION_STARTED.name(), false);
         Sessions.getCurrent().setAttribute(SessionAttributes.EVALUATION_FINISHED.name(), true);
+    }
+
+    @Override
+    public String getSessionId() {
+        return ((HttpSession) Sessions.getCurrent().getNativeSession()).getId();
     }
 }
