@@ -5,6 +5,7 @@ import de.unidue.evaluation.webapp.EntityExtractionService;
 import de.unidue.evaluation.webapp.EvaluationSessionService;
 import de.unidue.evaluation.webapp.data.EntityExtractionRepresentation;
 import de.unidue.proxyapi.data.entities.Entity;
+import de.unidue.proxyapi.util.EnhancementEngine;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
@@ -54,13 +55,27 @@ public class EngineViewModel implements Serializable {
     }
 
     @Command
+    @NotifyChange("*")
     public void nextEngine() {
         evaluationSessonService.nextEngine();
         if (evaluationSessonService.isEvalutionFinished()) {
             Executions.sendRedirect("/finished.zul");
         } else {
             Clients.showNotification("Danke für die Bewertung, bitte bewerte jetzt nächsten Engine.");
+            clearState();
         }
+    }
+
+    private void clearState() {
+        snippets.clear();
+        selectedSnippet = null;
+        selectedEntity = null;
+    }
+
+    @NotifyChange("*")
+    public void setCurrentEngine(Integer engineNumber) {
+        evaluationSessonService.setCurrentEngine(EnhancementEngine.values()[engineNumber-1]);
+        clearState();
     }
 
     public List<String> getSearchQueries() {

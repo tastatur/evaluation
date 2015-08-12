@@ -9,7 +9,7 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import java.util.Map;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
-public class EnginePageInit extends WiringVariablesInitiator {
+public class FinishedPageInit extends WiringVariablesInitiator {
 
     @WireVariable
     private EvaluationSessionService evaluationSessonService;
@@ -18,9 +18,9 @@ public class EnginePageInit extends WiringVariablesInitiator {
     public void doInit(Page page, Map<String, Object> map) throws Exception {
         super.doInit(page, map);
 
-        if (evaluationSessonService.isEvalutionFinished()) {
-            Executions.sendRedirect("/finished.zul");
-        } else if (!evaluationSessonService.isEvalutionRunning()) {
+        if (evaluationSessonService.isEvalutionRunning()) {
+            Executions.sendRedirect("/engine.zul");
+        } else if (!evaluationSessonService.isEvalutionFinished()) {
             Executions.sendRedirect("/index.zul");
         }
     }

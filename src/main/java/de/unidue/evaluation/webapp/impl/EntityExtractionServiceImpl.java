@@ -34,10 +34,10 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
         final Map<String, String> snippets = new HashMap<>();
         searchResults.forEach(bingSnippet -> snippets.put(bingSnippet.getUrl(), bingSnippet.getDescription()));
 
-        final Map<String, List<Entity>> entitesInSearchResults = stanbolClient.filterEmptyResults(stanbolClient.getEntitiesForSnippets(snippets,
+        final Map<String, List<Entity>> entitiesInSearchResults = stanbolClient.filterEmptyResults(stanbolClient.getEntitiesForSnippets(snippets,
                 evaluationSessionService.getCurrentEngine()));
 
-        return transformApiResultsForView(snippets, entitesInSearchResults);
+        return transformApiResultsForView(snippets, entitiesInSearchResults);
     }
 
     private List<EntityExtractionRepresentation> transformApiResultsForView(Map<String, String> snippets, Map<String, List<Entity>> entitesInSearchResults) {
