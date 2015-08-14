@@ -12,7 +12,11 @@ public class EnhancementEngineServiceImpl  implements EnhancementEngineService {
     @Override
     public EnhancementEngine getNextEngine(final EnhancementEngine currentEngine) {
         switch (currentEngine) {
-            case STANFORD:
+            case STANFORD_BOTH:
+                return EnhancementEngine.STANFORD_DEWAC;
+            case STANFORD_DEWAC:
+                return EnhancementEngine.STANFORD_HGC;
+            case STANFORD_HGC:
                 return EnhancementEngine.TIGER;
             case TIGER:
                 return EnhancementEngine.PIG;
@@ -23,6 +27,6 @@ public class EnhancementEngineServiceImpl  implements EnhancementEngineService {
 
     @Override
     public EnhancementEngine getFirstEngine() {
-        return EnhancementEngine.STANFORD;
+        return EnhancementEngine.STANFORD_BOTH;
     }
 }
