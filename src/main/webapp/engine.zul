@@ -9,7 +9,7 @@
             </label>
         </north>
         <west vflex="1">
-            <vlayout sclass="fn-panel1" hflex="1" vflex="1">
+            <vlayout width="400px" sclass="fn-panel1" hflex="1" vflex="1">
                 <hlayout sclass="fn-subpanel">
                     <label>Suchanfrage, die du stellen möchtest:</label>
                     <selectbox model="@load(vm.searchQueries)" selectedItem="@bind(vm.searchQuery)">
@@ -17,8 +17,8 @@
                             ${each}
                         </template>
                     </selectbox>
-                    <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets)" autodisable="self"/>
                 </hlayout>
+                <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets)" autodisable="self"/>
                 <label>Bitte bewerte den Engine. Entsprach die Qualität der Anreicherung deinen Erwartungen? Was ist mit der Geschwindigkeit?</label>
                 <label>Die Qualität - haben die extrahierte Entitäten dir bei deiner Suche helfen können?</label>
                 <radiogroup id="qualityRating" onCheck="@command('rateQuality', checked=self)">
@@ -41,7 +41,7 @@
         </west>
         <center sclass="nested-center" vflex="min">
             <vlayout spacing="0">
-                <hlayout spacing="0" height="400px">
+                <hlayout spacing="0" height="200px">
                     <listbox id="foundSnippets" model="@load(vm.snippets)" selectedItem="@bind(vm.selectedSnippet)" vflex="true" hflex="1">
                         <auxhead>
                             <auxheader colspan="3" class="topic">Gefundene Webseiten</auxheader>
@@ -71,7 +71,7 @@
                         </template>
                     </listbox>
                 </hlayout>
-                <hlayout spacing="0" height="400px">
+                <hlayout spacing="0" height="300px">
                     <listbox model="@load(vm.selectedEntity.getAllProperties())" vflex="true" hflex="1">
                         <auxhead>
                             <auxheader>Eigenschaften der Entität</auxheader>
