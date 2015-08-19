@@ -17,6 +17,10 @@ public class EnhancementEngineServiceImpl  implements EnhancementEngineService {
             case STANFORD_DEWAC:
                 return EnhancementEngine.STANFORD_HGC;
             case STANFORD_HGC:
+                return EnhancementEngine.MITIE_PIG;
+            case MITIE_PIG:
+                return EnhancementEngine.MITIE_TIGER;
+            case MITIE_TIGER:
                 return EnhancementEngine.TIGER;
             case TIGER:
                 return EnhancementEngine.PIG;
