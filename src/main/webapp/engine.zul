@@ -17,7 +17,7 @@
                             ${each}
                         </template>
                     </selectbox>
-                    <button label="Suchanfrage abschicken" onClick="@command('extractEntities')" autodisable="self"/>
+                    <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets)" autodisable="self"/>
                 </hlayout>
                 <label>Bitte bewerte den Engine. Entsprach die Qualität der Anreicherung deinen Erwartungen? Was ist mit der Geschwindigkeit?</label>
                 <label>Die Qualität - haben die extrahierte Entitäten dir bei deiner Suche helfen können?</label>
@@ -42,7 +42,7 @@
         <center sclass="nested-center" vflex="min">
             <vlayout spacing="0">
                 <hlayout spacing="0" height="400px">
-                    <listbox model="@load(vm.snippets)" selectedItem="@bind(vm.selectedSnippet)" vflex="true" hflex="1">
+                    <listbox id="foundSnippets" model="@load(vm.snippets)" selectedItem="@bind(vm.selectedSnippet)" vflex="true" hflex="1">
                         <auxhead>
                             <auxheader colspan="3" class="topic">Gefundene Webseiten</auxheader>
                         </auxhead>

@@ -7,13 +7,18 @@ import de.unidue.evaluation.webapp.data.EngineRatingService;
 import de.unidue.evaluation.webapp.data.EntityExtractionRepresentation;
 import de.unidue.proxyapi.data.entities.Entity;
 import de.unidue.proxyapi.util.EnhancementEngine;
+import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
+import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Radiogroup;
 
 import java.io.Serializable;
@@ -53,9 +58,14 @@ public class EngineViewModel implements Serializable {
     }
 
     @Command
-    @NotifyChange("snippets")
-    public void extractEntities() throws Exception {
-        snippets = entityExtractionService.getEntitiesForSearchQuery(getSearchQuery());
+    public void extractEntities(@BindingParam("snippetsBox") Listbox snippetsBox) throws Exception {
+        Clients.showBusy("Suche nach Entitäten...");
+        snippetsBox.addEventListener(Events.ON_CLIENT_INFO, event -> {
+            snippets = entityExtractionService.getEntitiesForSearchQuery(getSearchQuery());
+            Clients.clearBusy();
+            BindUtils.postNotifyChange(null, null, this, "snippets");
+        });
+        Events.echoEvent("onClientInfo", snippetsBox, null);
     }
 
     @Command
@@ -79,7 +89,7 @@ public class EngineViewModel implements Serializable {
 
     @NotifyChange("*")
     public void setCurrentEngine(Integer engineNumber) {
-        evaluationSessonService.setCurrentEngine(EnhancementEngine.values()[engineNumber-1]);
+        evaluationSessonService.setCurrentEngine(EnhancementEngine.values()[engineNumber - 1]);
         clearState();
     }
 
