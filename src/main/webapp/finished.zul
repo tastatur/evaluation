@@ -11,7 +11,7 @@
         <north sclass="header" height="50px">
             <label sclass="header-text" multiline="true">
                 Du hast alle Engines bewertet.
-                Jetzt kannst du alle Engines noch einmal ausprobieren, diesmal darfst du jede Frage stellen, die du möchtest.
+                Jetzt kannst Du alle Engines noch einmal ausprobieren, diesmal darfst Du jede Frage stellen, die Du möchtest.
             </label>
         </north>
         <west vflex="1">
@@ -23,7 +23,7 @@
                 <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets, logRequest=true)"
                         autodisable="self"/>
                 <hlayout sclass="fn-subpanel">
-                    <label>Suchengine, die du austesten möchtest:</label>
+                    <label>Engine, das du austesten möchtest:</label>
                     <selectbox model="${enginesModel}" selectedItem="@save(vm.currentEngine)">
                         <template name="enginesModel">
                             Engine ${each}
