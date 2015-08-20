@@ -58,6 +58,8 @@
                     <radio label="5"/>
                 </radiogroup>
 
+                <separator bar="true" />
+
                 <label>Wie gut hat das Engine dir bei der Suche helfen können?</label>
                 <radiogroup onCheck="@command('rateHelpQualityOfEngine', checked=self)">
                     <radio label="1"/>
@@ -66,7 +68,7 @@
                     <radio label="4"/>
                     <radio label="5"/>
                 </radiogroup>
-                <label>Die Geschwindigkeit - waren die Wartezeiten ertragbar? Diese Bewertung soll für alle Domäne gleich sein</label>
+                <label>Die Geschwindigkeit - waren die Wartezeiten ertragbar?</label>
                 <radiogroup onCheck="@command('rateSpeed', checked=self)">
                     <radio label="1"/>
                     <radio label="2"/>
