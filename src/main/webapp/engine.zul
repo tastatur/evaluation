@@ -11,25 +11,62 @@
         <west vflex="1">
             <vlayout width="400px" sclass="fn-panel1" hflex="1" vflex="1">
                 <hlayout sclass="fn-subpanel">
-                    <label>Suchanfrage, die du stellen möchtest:</label>
-                    <selectbox model="@load(vm.searchQueries)" selectedItem="@bind(vm.searchQuery)">
+                    <label>Domain der Suchanfrage, die du stellen möchtest</label>
+                    <selectbox model="@load(vm.searchDomains)" selectedItem="@bind(vm.searchDomain)">
                         <template name="model">
                             ${each}
                         </template>
                     </selectbox>
                 </hlayout>
+                <label>Suchanfrage, die du stellen möchtest:</label>
+                <selectbox model="@load(vm.searchQueries)" selectedItem="@bind(vm.searchQuery)">
+                    <template name="model">
+                        ${each}
+                    </template>
+                </selectbox>
                 <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets)" autodisable="self"/>
                 <label>Bitte bewerte den Engine. Entsprach die Qualität der Anreicherung deinen Erwartungen? Was ist mit der Geschwindigkeit?</label>
-                <label>Die Qualität - haben die extrahierte Entitäten dir bei deiner Suche helfen können?</label>
-                <radiogroup id="qualityRating" onCheck="@command('rateQuality', checked=self)">
+                <label>Die Qualität - haben die Entitäten zu deiner Anfrage gepasst? Waren das auch die Entitäten, nach denen du gesucht
+                    hättest?</label>
+                <label>Bitte, bewerte jedes Domain, damit wir wissen könnten, welche Arten von Fragen kannd der Engine am Besten beantworten</label>
+
+                <label>Politik</label>
+                <radiogroup onCheck="@command('rateQuality', checked=self, domain='politic')">
                     <radio label="1"/>
                     <radio label="2"/>
                     <radio label="3"/>
                     <radio label="4"/>
                     <radio label="5"/>
                 </radiogroup>
-                <label>Die Geschwindigkeit - waren die Wartezeiten ertragbar?</label>
-                <radiogroup id="speedRating" onCheck="@command('rateSpeed', checked=self)">
+
+                <label>Wikipedia</label>
+                <radiogroup onCheck="@command('rateQuality', checked=self, domain='wiki')">
+                    <radio label="1"/>
+                    <radio label="2"/>
+                    <radio label="3"/>
+                    <radio label="4"/>
+                    <radio label="5"/>
+                </radiogroup>
+
+                <label>Verschiedenes</label>
+                <radiogroup onCheck="@command('rateQuality', checked=self, domain='misc')">
+                    <radio label="1"/>
+                    <radio label="2"/>
+                    <radio label="3"/>
+                    <radio label="4"/>
+                    <radio label="5"/>
+                </radiogroup>
+
+                <label>Wie gut hat das Engine dir bei der Suche helfen können?</label>
+                <radiogroup onCheck="@command('rateHelpQualityOfEngine', checked=self)">
+                    <radio label="1"/>
+                    <radio label="2"/>
+                    <radio label="3"/>
+                    <radio label="4"/>
+                    <radio label="5"/>
+                </radiogroup>
+                <label>Die Geschwindigkeit - waren die Wartezeiten ertragbar? Diese Bewertung soll für alle Domäne gleich sein</label>
+                <radiogroup onCheck="@command('rateSpeed', checked=self)">
                     <radio label="1"/>
                     <radio label="2"/>
                     <radio label="3"/>

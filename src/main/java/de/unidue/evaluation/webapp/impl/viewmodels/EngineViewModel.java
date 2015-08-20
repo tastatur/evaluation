@@ -12,8 +12,6 @@ import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
-import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
@@ -22,18 +20,25 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Radiogroup;
 
 import java.io.Serializable;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public class EngineViewModel implements Serializable {
 
-    private Integer qualityOfEngine = 1;
+    private Map<String, Integer> qualityOfEngines = new HashMap<>();
+
     private Integer speedOfEngine = 1;
+    private Integer helpQualityOfEngine = 1;
+
     private String searchQuery;
     private List<EntityExtractionRepresentation> snippets = new ArrayList<>();
     private EntityExtractionRepresentation selectedSnippet = new EntityExtractionRepresentation();
     private Entity selectedEntity;
+    private String searchDomain = "politic";
 
     @WireVariable
     private AvailableQueriesService availableQueriesService;
@@ -48,13 +53,19 @@ public class EngineViewModel implements Serializable {
     private EngineRatingService engineRatingService;
 
     @Command
-    public void rateQuality(@BindingParam("checked") Radiogroup qualityRadioGroup) {
-        qualityOfEngine = Integer.valueOf(qualityRadioGroup.getSelectedItem().getLabel());
+    public void rateQuality(@BindingParam("checked") Radiogroup qualityRadioGroup, @BindingParam("domain") String domainOfQuestion) {
+        final Integer qualityOfEngine = Integer.valueOf(qualityRadioGroup.getSelectedItem().getLabel());
+        qualityOfEngines.put(domainOfQuestion, qualityOfEngine);
     }
 
     @Command
     public void rateSpeed(@BindingParam("checked") Radiogroup speedRadioGroup) {
         speedOfEngine = Integer.valueOf(speedRadioGroup.getSelectedItem().getLabel());
+    }
+
+    @Command
+    public void rateHelpQualityOfEngine(@BindingParam("checked") Radiogroup helpQualityRadioGroup) {
+            helpQualityOfEngine = Integer.valueOf(helpQualityRadioGroup.getSelectedItem().getLabel());
     }
 
     @Command
@@ -71,7 +82,7 @@ public class EngineViewModel implements Serializable {
     @Command
     @NotifyChange("*")
     public void nextEngine() {
-        engineRatingService.rateEngine(evaluationSessonService.getCurrentEngine(), qualityOfEngine, speedOfEngine);
+        engineRatingService.rateEngine(evaluationSessonService.getCurrentEngine(), qualityOfEngines, speedOfEngine, helpQualityOfEngine);
         evaluationSessonService.nextEngine();
         if (evaluationSessonService.isEvalutionFinished()) {
             Executions.sendRedirect("/finished.zul");
@@ -94,7 +105,16 @@ public class EngineViewModel implements Serializable {
     }
 
     public List<String> getSearchQueries() {
-        return availableQueriesService.getAllAvailableSearchQueries();
+        switch (searchDomain) {
+            case "politic":
+                return availableQueriesService.getPoliticalQueries();
+            case "wiki":
+                return availableQueriesService.getWikiQueries();
+            case "misc":
+                return availableQueriesService.getMiscQueries();
+            default:
+                throw new InvalidParameterException();
+        }
     }
 
     public String getSearchQuery() {
@@ -127,5 +147,18 @@ public class EngineViewModel implements Serializable {
 
     public void setSelectedEntity(Entity selectedEntity) {
         this.selectedEntity = selectedEntity;
+    }
+
+    public String getSearchDomain() {
+        return searchDomain;
+    }
+
+    @NotifyChange("searchQueries")
+    public void setSearchDomain(String searchDomain) {
+        this.searchDomain = searchDomain;
+    }
+
+    public List<String> getSearchDomains() {
+        return availableQueriesService.getAvailableDomains();
     }
 }

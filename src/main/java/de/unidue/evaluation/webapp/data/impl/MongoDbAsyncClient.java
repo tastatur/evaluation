@@ -1,5 +1,6 @@
 package de.unidue.evaluation.webapp.data.impl;
 
+import com.mongodb.async.client.FindIterable;
 import com.mongodb.async.client.MongoClient;
 import com.mongodb.async.client.MongoClients;
 import com.mongodb.async.client.MongoDatabase;
@@ -40,5 +41,10 @@ public class MongoDbAsyncClient implements MongoDbCLient {
     public void saveRating(Document rating) {
         mongoDatabase.getCollection(RATINGS_COLLECTION_NAME).insertOne(rating,
                 (result, throwable) -> log.debug("Bewertung wurde gespeichert"));
+    }
+
+    @Override
+    public FindIterable<Document> findDocuments(String collection, Document searchQuery) {
+        return mongoDatabase.getCollection(collection).find(searchQuery);
     }
 }

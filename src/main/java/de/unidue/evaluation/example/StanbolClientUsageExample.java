@@ -34,7 +34,7 @@ public class StanbolClientUsageExample {
         //Da wir mehrere Engines unterstützen, kannst du dem Stanbol auch mitteilen, welche Engine du testen möchtest
         //Es ist auch ganz nützlich, nur die Ergebnisse liefern zu lassen, wo Entitäten auch tatsächlich gefunden wurden.
         final Map<String, List<Entity>> entitesInSearchResults = stanbolClient.filterEmptyResults(stanbolClient.getEntitiesForSnippets(snippets,
-                EnhancementEngine.STANFORD));
+                EnhancementEngine.STANFORD_BOTH));
         System.out.println(entitesInSearchResults.size());
 
         //Und so kannst du für jede Webseite über die verlinkte Entitäten iterieren.
