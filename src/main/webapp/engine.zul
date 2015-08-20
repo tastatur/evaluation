@@ -24,7 +24,8 @@
                         ${each}
                     </template>
                 </selectbox>
-                <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets)" autodisable="self"/>
+                <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets, logRequest=false)"
+                        autodisable="self"/>
                 <label>Bitte bewerte den Engine. Entsprach die Qualität der Anreicherung deinen Erwartungen? Was ist mit der Geschwindigkeit?</label>
                 <label>Die Qualität - haben die Entitäten zu deiner Anfrage gepasst? Waren das auch die Entitäten, nach denen du gesucht
                     hättest?</label>

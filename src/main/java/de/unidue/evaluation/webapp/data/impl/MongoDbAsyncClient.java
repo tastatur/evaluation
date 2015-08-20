@@ -21,6 +21,7 @@ public class MongoDbAsyncClient implements MongoDbCLient {
     private static final String MONGO_CONNECTION_STRING = System.getProperty("de.unidue.mongoaddress");
     private static final String DATABASE_NAME = "evaluation";
     private static final String RATINGS_COLLECTION_NAME = "ratings";
+    private static final String QUERY_LOGS_COLLECTION = "query_logs";
 
     private MongoDatabase mongoDatabase;
 
@@ -41,6 +42,11 @@ public class MongoDbAsyncClient implements MongoDbCLient {
     public void saveRating(Document rating) {
         mongoDatabase.getCollection(RATINGS_COLLECTION_NAME).insertOne(rating,
                 (result, throwable) -> log.debug("Bewertung wurde gespeichert"));
+    }
+
+    @Override
+    public void saveQueryLog(Document queryLog) {
+        mongoDatabase.getCollection(QUERY_LOGS_COLLECTION).insertOne(queryLog, (result, throwable) -> log.debug("Anfrage wurde in den Logs gespeichert"));
     }
 
     @Override

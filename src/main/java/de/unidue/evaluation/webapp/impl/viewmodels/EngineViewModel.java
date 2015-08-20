@@ -5,6 +5,7 @@ import de.unidue.evaluation.webapp.EntityExtractionService;
 import de.unidue.evaluation.webapp.EvaluationSessionService;
 import de.unidue.evaluation.webapp.data.EngineRatingService;
 import de.unidue.evaluation.webapp.data.EntityExtractionRepresentation;
+import de.unidue.evaluation.webapp.data.QueryLogService;
 import de.unidue.proxyapi.data.entities.Entity;
 import de.unidue.proxyapi.util.EnhancementEngine;
 import org.zkoss.bind.BindUtils;
@@ -52,6 +53,9 @@ public class EngineViewModel implements Serializable {
     @WireVariable
     private EngineRatingService engineRatingService;
 
+    @WireVariable
+    private QueryLogService queryLogService;
+
     @Command
     public void rateQuality(@BindingParam("checked") Radiogroup qualityRadioGroup, @BindingParam("domain") String domainOfQuestion) {
         final Integer qualityOfEngine = Integer.valueOf(qualityRadioGroup.getSelectedItem().getLabel());
@@ -65,14 +69,17 @@ public class EngineViewModel implements Serializable {
 
     @Command
     public void rateHelpQualityOfEngine(@BindingParam("checked") Radiogroup helpQualityRadioGroup) {
-            helpQualityOfEngine = Integer.valueOf(helpQualityRadioGroup.getSelectedItem().getLabel());
+        helpQualityOfEngine = Integer.valueOf(helpQualityRadioGroup.getSelectedItem().getLabel());
     }
 
     @Command
-    public void extractEntities(@BindingParam("snippetsBox") Listbox snippetsBox) throws Exception {
+    public void extractEntities(@BindingParam("snippetsBox") Listbox snippetsBox, @BindingParam("logRequest") Boolean logRequest) throws Exception {
         Clients.showBusy("Suche nach Entitäten...");
         snippetsBox.addEventListener(Events.ON_CLIENT_INFO, event -> {
             snippets = entityExtractionService.getEntitiesForSearchQuery(getSearchQuery());
+            if (logRequest) {
+                queryLogService.addQueryLog(evaluationSessonService.getSessionId(), getSearchQuery());
+            }
             Clients.clearBusy();
             BindUtils.postNotifyChange(null, null, this, "snippets");
         });

@@ -20,7 +20,8 @@
                     <label>Suchanfrage, die du stellen möchtest:</label>
                     <textbox value="@save(vm.searchQuery)"/>
                 </hlayout>
-                <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets)" autodisable="self"/>
+                <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets, logRequest=true)"
+                        autodisable="self"/>
                 <hlayout sclass="fn-subpanel">
                     <label>Suchengine, die du austesten möchtest:</label>
                     <selectbox model="${enginesModel}" selectedItem="@save(vm.currentEngine)">
