@@ -11,6 +11,7 @@ import de.unidue.proxyapi.util.EnhancementEngine;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
+import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.event.Events;
@@ -20,6 +21,7 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Radiogroup;
 
+import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -32,8 +34,8 @@ public class EngineViewModel implements Serializable {
 
     private Map<String, Integer> qualityOfEngines = new HashMap<>();
 
-    private Integer speedOfEngine = 1;
-    private Integer helpQualityOfEngine = 1;
+    private Integer speedOfEngine = 3;
+    private Integer helpQualityOfEngine = 3;
 
     private String searchQuery;
     private List<EntityExtractionRepresentation> snippets = new ArrayList<>();
@@ -55,6 +57,13 @@ public class EngineViewModel implements Serializable {
 
     @WireVariable
     private QueryLogService queryLogService;
+
+    @Init
+    public void init() {
+        qualityOfEngines.put("misc", 3);
+        qualityOfEngines.put("wiki", 3);
+        qualityOfEngines.put("politic", 3);
+    }
 
     @Command
     public void rateQuality(@BindingParam("checked") Radiogroup qualityRadioGroup, @BindingParam("domain") String domainOfQuestion) {
