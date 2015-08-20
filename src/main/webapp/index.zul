@@ -5,27 +5,23 @@
         <center>
             <vlayout>
                 <label multiline="true">
-                    Herzlich willkommen in die Evaluierung der Extraktion von Entitäten aus Suchergebnissen!
+                    Herzlich willkommen in die Evaluierung der Extraktion von Entitäten aus Suchergebnisseiten!
 
-                    Was ist denn diese "Extraktion von Entitäten aus Suchergebnissen"? Eine Entität ist nichts weiteres, als ein Objekt aus der
-                    echten
-                    Welt - eine Person wie Angela Merkel ist eine Entität, oder eine Stadt wie Duisburg.
+                    Wenn Du heutzutage eine Suchanfrage an Google oder andere Suchmaschine schickst, bekommst Du als Antwort nur eine Liste von gefundenen Webseiten und die sogenannte „Snippets“ - kurze Ausschnitte aus dem Text der Webseite. Und wir wollen dieses Konzept der Suchmaschinen erweitern – wie möchten dir zusätzlich zu den Daten, die Suchmaschine liefert, auch sogenannte Entitäten – Personen, Organisationen, geographische Objekte – anzeigen können, mit allen möglichen Eigenschaften (wie Geburts- oder Todesdatum).
+                    Dafür müssen wir diese Entitäten zuerst aus den Textabschnitten, die uns Google oder Bing liefert, extrahieren, und es gibt verschiedene Möglichkeiten, das zu machen.
 
-                    Die Extraktion von Entitäten besteht darin, dass wir irgendein Text nehmen, und in diesem Text nach Entitäten suchen.
+                    Und um feststellen zu können, welche Methode Dir am besten helfen könnte, brauchen wir Deine Hilfe:
+                    Während der Evaluierung solltest du zuerst jede Extraktionmethode ausprobieren und bewerten. Damit wir die Daten evaluieren könnten, kannst du in erster Phase der Evaluierung nur die Anfragen aus einer vorgegebener Liste stellen. Wenn du aber mit der Evaluierung fertig bist, darfst du jedes Engine noch einmal ausprobieren, und zwar mit jeder beliebiger Suchanfrage,
 
-                    Unsere Idee besteht darin, dass wir mit Hilfe von dieser "Extraktion von Entitäten" dir beim Googeln zu helfen versuchen -
-                    wenn
-                    du eine Suchanfrage eingibst, bearbeiten wir die Ergebnisse, die Suchmachiene uns liefert, und versuchen in den Ergebnissen
-                    die
-                    wichtigste Entitäten zu finden, damit wir dir einen Überblick über gefundene Personen, Firmen, Länder usw. geben könnten.
+                    Da die Qualität und Relevanz von extrahiereten Entitäten für verschiedene Themengebiete verschieden sein kann, bitten wir Dich, für jedes Engine die Qualität von extrahierten Entitäten für jedes Gebiet zu bewerten.
 
-                    Es gibt verschiedene Möglichkeiten, wie das gemacht werden kann, darum bitten wir dich, verschiedene Einsätze zur Extraktion
-                    von Entitäten auszuprobieren, und die zu bewerten.
+                    Da die Geschwindigkeit der Extraktion vom Themagebiet nicht abhängen soll, bitten wir Dich, nur eine Geschwindigkeitbewertung pro Engine abzugeben.
 
-                    Damit wir die Ergebnisse besser auswerten könnten, gibt es eine begrenzte Anzahl von Fragen, die du stellen könntest. Aber
-                    nach
-                    der Evaluierung bekommst du die Möglichkeit, jede beliebige Suchanfrage einzugeben, und einen Feedback an uns zu senden, falls
-                    du möchtest.
+                    Anschließlich bitten wir Dich, den „Hilfsreichgrad“ der Methode zu bewerten – könnte die Extraktion von Entitäten dir bei der Suche helfen, oder gab es kein Unterschied zu der herkömmlichen Suchmethode, ohne Entitaten?
+
+                    Falls Du welche Fragen hast oder Feedback abgeben möchtest, bitte schreibe uns direkt an:
+                    denis.repkov@stud.uni-duisburg-essen.de
+                    dungs@is.inf.uni-due.de
                 </label>
                 <button label="Die Evaluierung starten" onClick="@command('startEvaluation')"/>
             </vlayout>
