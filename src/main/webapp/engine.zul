@@ -4,21 +4,21 @@
     <borderlayout apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.unidue.evaluation.webapp.impl.viewmodels.EngineViewModel')">
         <north sclass="header" height="50px">
             <label sclass="header-text" multiline="true">
-                Hier kannst du die ausgewählte Anfrage an unseres System senden, und dich die Ergebnisse angucken.
-                Rechts könntest du die Anfrage stellen und rechts hast du die Liste von gefundenen Entitäten.
+                In dem linken Reiter kannst du oben das erwünschte Themagebiet auswählen, und die Anfrage, die du austesten möchtest,
+                und unten kannst du das Engine bewerten und zum nächsten wechseln.
             </label>
         </north>
         <west vflex="1">
             <vlayout width="400px" sclass="fn-panel1" hflex="1" vflex="1">
                 <hlayout sclass="fn-subpanel">
-                    <label>Domain der Suchanfrage, die du stellen möchtest</label>
+                    <label>Bitte wähle das Themengebiet aus</label>
                     <selectbox model="@load(vm.searchDomains)" selectedItem="@bind(vm.searchDomain)">
                         <template name="model">
                             ${each}
                         </template>
                     </selectbox>
                 </hlayout>
-                <label>Suchanfrage, die du stellen möchtest:</label>
+                <label>Bitte wähle die Suchanfrage aus:</label>
                 <selectbox model="@load(vm.searchQueries)" selectedItem="@bind(vm.searchQuery)">
                     <template name="model">
                         ${each}
@@ -26,11 +26,10 @@
                 </selectbox>
                 <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets, logRequest=false)"
                         autodisable="self"/>
-                <label>Bitte bewerte den Engine. Entsprach die Qualität der Anreicherung deinen Erwartungen? Was ist mit der Geschwindigkeit?</label>
-                <label>Die Qualität - haben die Entitäten zu deiner Anfrage gepasst? Waren das auch die Entitäten, nach denen du gesucht
-                    hättest?</label>
-                <label>Bitte, bewerte jedes Domain, damit wir wissen könnten, welche Arten von Fragen kannd der Engine am Besten beantworten</label>
+                <label>Bitte bewerte das Engine.</label>
 
+                <label>Wie gut war die Qualität von extrahierten Entitäten? Haben die zu der Suchanfrage gepasst? Waren das die Entitäten, die du auch gebraucht hättest? Bitte bewerte die Qualität für jedes Themengebiet.
+                </label>
                 <label>Politik</label>
                 <radiogroup onCheck="@command('rateQuality', checked=self, domain='politic')">
                     <radio label="1"/>
@@ -60,7 +59,7 @@
 
                 <separator bar="true" />
 
-                <label>Wie gut hat das Engine dir bei der Suche helfen können?</label>
+                <label>Wie gut hat das Engine dir bei der Suche helfen können? (Wie hilfreich war der Einsatz der Extraktion von Entitäten generell?)</label>
                 <radiogroup onCheck="@command('rateHelpQualityOfEngine', checked=self)">
                     <radio label="1"/>
                     <radio label="2"/>
@@ -68,7 +67,8 @@
                     <radio label="4"/>
                     <radio label="5"/>
                 </radiogroup>
-                <label>Die Geschwindigkeit - waren die Wartezeiten ertragbar?</label>
+                <label>Die Geschwindigkeit - waren die Wartezeiten ertragbar? Waren die viel länger, als bei der Suche ohne Extraktion von Entitäten?
+                </label>
                 <radiogroup onCheck="@command('rateSpeed', checked=self)">
                     <radio label="1"/>
                     <radio label="2"/>
