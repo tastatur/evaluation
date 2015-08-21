@@ -9,8 +9,6 @@ public interface AvailableQueriesService {
 
     List<String> getPoliticalQueries();
 
-    List<String> getAvailableDomains();
-
     List<String> getMiscQueries();
 
     List<String> getWikiQueries();

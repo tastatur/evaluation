@@ -40,7 +40,7 @@ public class EngineViewModel implements Serializable {
     private List<EntityExtractionRepresentation> snippets = new ArrayList<>();
     private EntityExtractionRepresentation selectedSnippet = new EntityExtractionRepresentation();
     private Entity selectedEntity;
-    private String searchDomain = "politic";
+    private String searchDomain;
 
     @WireVariable
     private AvailableQueriesService availableQueriesService;
@@ -59,9 +59,12 @@ public class EngineViewModel implements Serializable {
 
     @Init
     public void init() {
-        qualityOfEngines.put("misc", 3);
-        qualityOfEngines.put("wiki", 3);
-        qualityOfEngines.put("politic", 3);
+        if (evaluationSessonService.isEvalutionRunning()) {
+            qualityOfEngines.put("misc", 3);
+            qualityOfEngines.put("wiki", 3);
+            qualityOfEngines.put("politic", 3);
+            searchDomain = evaluationSessonService.getNextDomain();
+        }
     }
 
     @Command
@@ -104,6 +107,7 @@ public class EngineViewModel implements Serializable {
         } else {
             Clients.showNotification("Danke für die Bewertung, bitte bewerte jetzt nächsten Engine.");
             clearState();
+            searchDomain = evaluationSessonService.getNextDomain();
         }
     }
 
@@ -162,18 +166,5 @@ public class EngineViewModel implements Serializable {
 
     public void setSelectedEntity(Entity selectedEntity) {
         this.selectedEntity = selectedEntity;
-    }
-
-    public String getSearchDomain() {
-        return searchDomain;
-    }
-
-    @NotifyChange("searchQueries")
-    public void setSearchDomain(String searchDomain) {
-        this.searchDomain = searchDomain;
-    }
-
-    public List<String> getSearchDomains() {
-        return availableQueriesService.getAvailableDomains();
     }
 }

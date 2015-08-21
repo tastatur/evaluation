@@ -10,14 +10,6 @@
         </north>
         <west vflex="1">
             <vlayout width="400px" sclass="fn-panel1" hflex="1" vflex="1">
-                <hlayout sclass="fn-subpanel">
-                    <label>Bitte wähle das Themengebiet aus</label>
-                    <selectbox model="@load(vm.searchDomains)" selectedItem="@bind(vm.searchDomain)">
-                        <template name="model">
-                            ${each}
-                        </template>
-                    </selectbox>
-                </hlayout>
                 <label>Bitte wähle die Suchanfrage aus:</label>
                 <selectbox model="@load(vm.searchQueries)" selectedItem="@bind(vm.searchQuery)">
                     <template name="model">

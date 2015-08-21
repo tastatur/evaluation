@@ -16,7 +16,6 @@ import java.util.List;
 @Scope(value = "singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class AvailableQueriesServiceImpl implements AvailableQueriesService {
 
-    private static final List<String> AVAILABLE_DOMAINS = Arrays.asList("politic", "wiki", "misc");
     private List<String> politicalQueries = new ArrayList<>();
     private List<String> miscQueries = new ArrayList<>();
     private List<String> wikiQueries = new ArrayList<>();
@@ -39,11 +38,6 @@ public class AvailableQueriesServiceImpl implements AvailableQueriesService {
     @Override
     public List<String> getPoliticalQueries() {
         return politicalQueries;
-    }
-
-    @Override
-    public List<String> getAvailableDomains() {
-        return AVAILABLE_DOMAINS;
     }
 
     @Override
