@@ -21,7 +21,6 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Radiogroup;
 
-import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;

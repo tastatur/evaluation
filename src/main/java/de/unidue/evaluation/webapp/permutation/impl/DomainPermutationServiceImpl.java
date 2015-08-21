@@ -6,7 +6,9 @@ import de.unidue.evaluation.webapp.permutation.DomainPermutationService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.IntUnaryOperator;
@@ -16,12 +18,14 @@ public class DomainPermutationServiceImpl implements DomainPermutationService {
 
     private static final List<String> availableQueryDomains = Arrays.asList("politic", "wiki", "misc");
     private List<List<String>> availablePermutations;
-    private AtomicInteger atomicPermutationIndex = new AtomicInteger();
+    private AtomicInteger atomicPermutationIndex = new AtomicInteger(0);
     private IntUnaryOperator permutationIndexOperator;
 
     @PostConstruct
     public void initAvailablePermutations() {
-        availablePermutations = PermutationUtil.getAllPermutations(availableQueryDomains);
+        final List<List<String>> permutations = new ArrayList<>();
+        PermutationUtil.getAllPermutations(availableQueryDomains).forEach(permutation -> permutations.add(Collections.unmodifiableList(permutation)));
+        availablePermutations = Collections.unmodifiableList(permutations);
         permutationIndexOperator = new PermutationIndexOperator(availablePermutations.size());
     }
 

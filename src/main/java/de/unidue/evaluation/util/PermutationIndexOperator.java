@@ -7,15 +7,15 @@ import java.util.function.IntUnaryOperator;
  * oder 0, damit wir von vorne anfangen könnten
  */
 public class PermutationIndexOperator implements IntUnaryOperator {
-    private int max;
+    private int arraySize;
 
     public PermutationIndexOperator(int arraySize) {
-        this.max = arraySize;
+        this.arraySize = arraySize;
     }
 
     @Override
     public int applyAsInt(int operand) {
-        if (operand >= max) {
+        if (operand >= arraySize -1) {
             return 0;
         }
         return operand + 1;
