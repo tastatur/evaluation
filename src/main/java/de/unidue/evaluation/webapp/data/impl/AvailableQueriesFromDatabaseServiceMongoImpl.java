@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service("availableQueriesFromDatabaseService")
 @Scope(value = "singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class AvailableQueriesFromDatabaseServiceImpl implements AvailableQueriesFromDatabaseService {
+public class AvailableQueriesFromDatabaseServiceMongoImpl implements AvailableQueriesFromDatabaseService {
 
     private static final String AVAILABLE_QUERIES_COLLECTION = "available_search_queries";
 

@@ -8,9 +8,7 @@ import org.bson.Document;
  */
 public interface MongoDbCLient {
 
-    void saveRating(final Document rating);
-
-    void saveQueryLog(final Document queryLog);
-
     FindIterable<Document> findDocuments(final String collection, final Document searchQuery);
+
+    void saveDocument(final String collection, final Document document);
 }

@@ -18,7 +18,9 @@ import java.util.Map;
 
 @Service("engineRatingService")
 @Scope(value = "singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class MongoEngineRatingService implements EngineRatingService {
+public class EngineRatingServiceMongoImpl implements EngineRatingService {
+
+    private static final String RATINGS_COLLECTION_NAME = "ratings";
 
     @Autowired
     private MongoDbCLient mongoDbClient;
@@ -35,6 +37,6 @@ public class MongoEngineRatingService implements EngineRatingService {
                 .append("qualityRatingMisc", qualityRatings.get("misc"))
                 .append("speedRating", speedRating)
                 .append("helpQuality", helpQualityOfEngine);
-        mongoDbClient.saveRating(rating);
+        mongoDbClient.saveDocument(RATINGS_COLLECTION_NAME, rating);
     }
 }

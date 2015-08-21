@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 @Service("queryLogService")
 @Scope(value = "singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class QueryLogServiceImpl implements QueryLogService {
+public class QueryLogServiceMongoImpl implements QueryLogService {
+
+    private static final String QUERY_LOGS_COLLECTION = "query_logs";
 
     @Autowired
     private MongoDbCLient mongoDbClient;
@@ -19,6 +21,6 @@ public class QueryLogServiceImpl implements QueryLogService {
     public void addQueryLog(String sessionId, String query) {
         final Document queryLog = new Document().append("session", sessionId)
                 .append("query", query);
-        mongoDbClient.saveQueryLog(queryLog);
+        mongoDbClient.saveDocument(QUERY_LOGS_COLLECTION, queryLog);
     }
 }
