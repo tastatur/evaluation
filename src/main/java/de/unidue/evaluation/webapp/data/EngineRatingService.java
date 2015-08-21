@@ -9,5 +9,5 @@ import java.util.Map;
  */
 public interface EngineRatingService {
 
-    void rateEngine(final EnhancementEngine engine, Map<String, Integer> qualityRatings, int speedRating, Integer helpQualityOfEngine);
+    void rateEngine(final EnhancementEngine engine, int qualityRating, int speedRating, int helpQualityRating, String domainRated);
 }

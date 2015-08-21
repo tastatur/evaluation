@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 /**
  * Benutze MongoDB, um Evaluierungsdaten zu speichern
  */
@@ -29,14 +27,12 @@ public class EngineRatingServiceMongoImpl implements EngineRatingService {
     private EvaluationSessionService evaluationSessonService;
 
     @Override
-    public void rateEngine(EnhancementEngine engine, Map<String, Integer> qualityRatings, int speedRating, Integer helpQualityOfEngine) {
+    public void rateEngine(EnhancementEngine engine, int qualityRating, int speedRating, int helpQualityRating, String domainRated) {
         Document rating = new Document("session", evaluationSessonService.getSessionId())
                 .append("engine", evaluationSessonService.getCurrentEngine().toString())
-                .append("qualityRatingPolitic", qualityRatings.get("politic"))
-                .append("qualityRatingWiki", qualityRatings.get("wiki"))
-                .append("qualityRatingMisc", qualityRatings.get("misc"))
+                .append("qualityRating_".concat(domainRated), qualityRating)
                 .append("speedRating", speedRating)
-                .append("helpQuality", helpQualityOfEngine);
+                .append("helpQuality", helpQualityRating);
         mongoDbClient.saveDocument(RATINGS_COLLECTION_NAME, rating);
     }
 }

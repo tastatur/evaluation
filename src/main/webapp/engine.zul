@@ -20,35 +20,15 @@
                         autodisable="self"/>
                 <label>Bitte bewerte das Engine.</label>
 
-                <label>Wie gut war die Qualität von extrahierten Entitäten? Haben die zu der Suchanfrage gepasst? Waren das die Entitäten, die du auch gebraucht hättest? Bitte bewerte die Qualität für jedes Themengebiet.
+                <label>Wie gut war die Qualität von extrahierten Entitäten? Haben die zu der Suchanfrage gepasst? Waren das die Entitäten, die du auch gebraucht hättest?
                 </label>
-                <label>Politik</label>
-                <radiogroup onCheck="@command('rateQuality', checked=self, domain='politic')">
+                <radiogroup onCheck="@command('rateQuality', checked=self)">
                     <radio label="1"/>
                     <radio label="2"/>
                     <radio label="3" selected="true"/>
                     <radio label="4"/>
                     <radio label="5"/>
                 </radiogroup>
-
-                <label>Wikipedia</label>
-                <radiogroup onCheck="@command('rateQuality', checked=self, domain='wiki')">
-                    <radio label="1"/>
-                    <radio label="2"/>
-                    <radio label="3" selected="true"/>
-                    <radio label="4"/>
-                    <radio label="5"/>
-                </radiogroup>
-
-                <label>Verschiedenes</label>
-                <radiogroup onCheck="@command('rateQuality', checked=self, domain='misc')">
-                    <radio label="1"/>
-                    <radio label="2"/>
-                    <radio label="3" selected="true"/>
-                    <radio label="4"/>
-                    <radio label="5"/>
-                </radiogroup>
-
                 <separator bar="true" />
 
                 <label>Wie gut hat das Engine dir bei der Suche helfen können? (Wie hilfreich war der Einsatz der Extraktion von Entitäten generell?)</label>

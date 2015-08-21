@@ -24,15 +24,12 @@ import org.zkoss.zul.Radiogroup;
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public class EngineViewModel implements Serializable {
 
-    private Map<String, Integer> qualityOfEngines = new HashMap<>();
-
+    private Integer qualityOfEngine = 3;
     private Integer speedOfEngine = 3;
     private Integer helpQualityOfEngine = 3;
 
@@ -60,17 +57,13 @@ public class EngineViewModel implements Serializable {
     @Init
     public void init() {
         if (evaluationSessonService.isEvalutionRunning()) {
-            qualityOfEngines.put("misc", 3);
-            qualityOfEngines.put("wiki", 3);
-            qualityOfEngines.put("politic", 3);
             searchDomain = evaluationSessonService.getNextDomain();
         }
     }
 
     @Command
-    public void rateQuality(@BindingParam("checked") Radiogroup qualityRadioGroup, @BindingParam("domain") String domainOfQuestion) {
-        final Integer qualityOfEngine = Integer.valueOf(qualityRadioGroup.getSelectedItem().getLabel());
-        qualityOfEngines.put(domainOfQuestion, qualityOfEngine);
+    public void rateQuality(@BindingParam("checked") Radiogroup qualityRadioGroup) {
+        qualityOfEngine = Integer.valueOf(qualityRadioGroup.getSelectedItem().getLabel());
     }
 
     @Command
@@ -100,7 +93,7 @@ public class EngineViewModel implements Serializable {
     @Command
     @NotifyChange("*")
     public void nextEngine() {
-        engineRatingService.rateEngine(evaluationSessonService.getCurrentEngine(), qualityOfEngines, speedOfEngine, helpQualityOfEngine);
+        engineRatingService.rateEngine(evaluationSessonService.getCurrentEngine(), qualityOfEngine, speedOfEngine, helpQualityOfEngine, searchDomain);
         evaluationSessonService.nextEngine();
         if (evaluationSessonService.isEvalutionFinished()) {
             Executions.sendRedirect("/finished.zul");
