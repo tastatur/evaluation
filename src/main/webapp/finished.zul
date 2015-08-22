@@ -1,17 +1,11 @@
 <?init class="de.unidue.evaluation.webapp.impl.init.FinishedPageInit"?>
 <?link rel="stylesheet" type="text/css" href="/style.css"?>
 <zk>
-    <zscript>
-        <![CDATA[
-           String[] engines = { "1", "2", "3", "4", "5", "6", "7"};
-           ListModelList enginesModel = new ListModelList(engines);
-        ]]>
-    </zscript>
-    <borderlayout apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.unidue.evaluation.webapp.impl.viewmodels.FinishedViewModel')">
+    <borderlayout apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.unidue.evaluation.webapp.impl.viewmodels.EngineViewModel')">
         <north sclass="header" height="50px">
             <label sclass="header-text" multiline="true">
                 Du hast alle Engines bewertet.
-                Jetzt kannst Du alle Engines noch einmal ausprobieren, diesmal darfst Du jede Frage stellen, die Du möchtest.
+                Jetzt kannst Du unseres System noch einmal austesten, diesmal darfst Du jede Frage stellen, die Du möchtest.
             </label>
         </north>
         <west vflex="1">
@@ -22,14 +16,6 @@
                 </hlayout>
                 <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets, logRequest=true)"
                         autodisable="self"/>
-                <hlayout sclass="fn-subpanel">
-                    <label>Engine, das du austesten möchtest:</label>
-                    <selectbox model="${enginesModel}" selectedItem="@save(vm.currentEngine)">
-                        <template name="enginesModel">
-                            Engine ${each}
-                        </template>
-                    </selectbox>
-                </hlayout>
             </vlayout>
         </west>
         <center sclass="nested-center" vflex="min">

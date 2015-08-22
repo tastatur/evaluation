@@ -87,6 +87,7 @@ public class EvalutionSessionServiceImpl implements EvaluationSessionService {
         Sessions.getCurrent().setAttribute(SessionAttributes.EVALUATION_STARTED.name(), false);
         Sessions.getCurrent().setAttribute(SessionAttributes.EVALUATION_FINISHED.name(), true);
         Sessions.getCurrent().removeAttribute(SessionAttributes.CURRENT_DOMAINS_PERMUTATION_ITER.name());
+        setCurrentEngine(enhancementEngineService.getNextEngineForFinishedPage());
     }
 
     @Override

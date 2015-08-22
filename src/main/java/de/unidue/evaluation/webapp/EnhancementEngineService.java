@@ -16,4 +16,11 @@ public interface EnhancementEngineService {
      * @return Engine, der als erstes evaluiert wird.
      */
     EnhancementEngine getFirstEngine();
+
+    /**
+     * Was für Engine soll dem nächsten Benutzer für seine Finished-Page zugeordnet werden.
+     * Jeder Benutzer bekommt dabei das "nächste" Engine
+     * @return Engine, das auf der Finished-Page als nächsts verwendet werden soll. Darf auf keinen Fall null sein.
+     */
+    EnhancementEngine getNextEngineForFinishedPage();
 }

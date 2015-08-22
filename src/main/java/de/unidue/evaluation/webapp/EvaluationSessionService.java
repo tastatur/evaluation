@@ -45,6 +45,8 @@ public interface EvaluationSessionService {
 
     /**
      * Beende die Evaluierung
+     * Die Implementierung dieser Methode muss unbedingt das Engine, das auf der Finished-Page
+     * verwendet wird, als currentEngine setzen. Jeder Benutzer bekommt dabei das nächste Engine.
      */
     void finishEvaluation();
 

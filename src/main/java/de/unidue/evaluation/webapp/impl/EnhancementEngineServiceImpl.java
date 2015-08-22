@@ -6,9 +6,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 @Service("enhancementEngineService")
 @Scope(value = "singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class EnhancementEngineServiceImpl  implements EnhancementEngineService {
+public class EnhancementEngineServiceImpl implements EnhancementEngineService {
+
+    private AtomicReference<EnhancementEngine> lastEngineOnFinishedPage = new AtomicReference<>(EnhancementEngine.STANFORD_BOTH);
+
     @Override
     public EnhancementEngine getNextEngine(final EnhancementEngine currentEngine) {
         switch (currentEngine) {
@@ -32,5 +37,16 @@ public class EnhancementEngineServiceImpl  implements EnhancementEngineService {
     @Override
     public EnhancementEngine getFirstEngine() {
         return EnhancementEngine.STANFORD_BOTH;
+    }
+
+    @Override
+    public EnhancementEngine getNextEngineForFinishedPage() {
+        return lastEngineOnFinishedPage.getAndUpdate(currentFinishedPageEngine -> {
+            EnhancementEngine nextFinishedPageEngine = getNextEngine(currentFinishedPageEngine);
+            if (nextFinishedPageEngine == null) {
+                nextFinishedPageEngine = getFirstEngine();
+            }
+            return nextFinishedPageEngine;
+        });
     }
 }
