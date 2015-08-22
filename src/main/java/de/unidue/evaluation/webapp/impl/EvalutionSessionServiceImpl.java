@@ -92,13 +92,17 @@ public class EvalutionSessionServiceImpl implements EvaluationSessionService {
     @Override
     @SuppressWarnings("unchecked")
     public String getNextDomain() {
-        final String domain;
-        final Iterator<String> permutationIterator = (Iterator<String>) Sessions.getCurrent().getAttribute(SessionAttributes
-                .CURRENT_DOMAINS_PERMUTATION_ITER.name());
-        synchronized (permutationIterator) {
-            domain = permutationIterator.next();
+        if (isEvalutionRunning()) {
+            final String domain;
+            final Iterator<String> permutationIterator = (Iterator<String>) Sessions.getCurrent().getAttribute(SessionAttributes
+                    .CURRENT_DOMAINS_PERMUTATION_ITER.name());
+            synchronized (permutationIterator) {
+                domain = permutationIterator.next();
+            }
+            return domain;
         }
-        return domain;
+
+        return null;
     }
 
     @Override

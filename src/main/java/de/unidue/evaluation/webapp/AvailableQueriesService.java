@@ -7,9 +7,5 @@ import java.util.List;
  */
 public interface AvailableQueriesService {
 
-    List<String> getPoliticalQueries();
-
-    List<String> getMiscQueries();
-
-    List<String> getWikiQueries();
+    List<String> getQueriesForSearchDomain(final String searchDomain);
 }

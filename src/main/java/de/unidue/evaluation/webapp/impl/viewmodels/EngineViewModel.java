@@ -7,7 +7,6 @@ import de.unidue.evaluation.webapp.data.EngineRatingService;
 import de.unidue.evaluation.webapp.data.EntityExtractionRepresentation;
 import de.unidue.evaluation.webapp.data.QueryLogService;
 import de.unidue.proxyapi.data.entities.Entity;
-import de.unidue.proxyapi.util.EnhancementEngine;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
@@ -22,7 +21,6 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Radiogroup;
 
 import java.io.Serializable;
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +44,7 @@ public class EngineViewModel implements Serializable {
     private EntityExtractionService entityExtractionService;
 
     @WireVariable
-    private EvaluationSessionService evaluationSessonService;
+    protected EvaluationSessionService evaluationSessonService;
 
     @WireVariable
     private EngineRatingService engineRatingService;
@@ -56,9 +54,7 @@ public class EngineViewModel implements Serializable {
 
     @Init
     public void init() {
-        if (evaluationSessonService.isEvalutionRunning()) {
-            searchDomain = evaluationSessonService.getNextDomain();
-        }
+        searchDomain = evaluationSessonService.getNextDomain();
     }
 
     @Command
@@ -85,9 +81,11 @@ public class EngineViewModel implements Serializable {
                 queryLogService.addQueryLog(evaluationSessonService.getSessionId(), getSearchQuery());
             }
             Clients.clearBusy();
-            BindUtils.postNotifyChange(null, null, this, "snippets");
+            selectedSnippet = null;
+            selectedEntity = null;
+            BindUtils.postNotifyChange(null, null, this, "*");
         });
-        Events.echoEvent("onClientInfo", snippetsBox, null);
+        Events.echoEvent(Events.ON_CLIENT_INFO, snippetsBox, null);
     }
 
     @Command
@@ -104,29 +102,14 @@ public class EngineViewModel implements Serializable {
         }
     }
 
-    private void clearState() {
+    protected void clearState() {
         snippets.clear();
         selectedSnippet = null;
         selectedEntity = null;
     }
 
-    @NotifyChange("*")
-    public void setCurrentEngine(Integer engineNumber) {
-        evaluationSessonService.setCurrentEngine(EnhancementEngine.values()[engineNumber - 1]);
-        clearState();
-    }
-
     public List<String> getSearchQueries() {
-        switch (searchDomain) {
-            case "politic":
-                return availableQueriesService.getPoliticalQueries();
-            case "wiki":
-                return availableQueriesService.getWikiQueries();
-            case "misc":
-                return availableQueriesService.getMiscQueries();
-            default:
-                throw new InvalidParameterException();
-        }
+        return availableQueriesService.getQueriesForSearchDomain(searchDomain);
     }
 
     public String getSearchQuery() {

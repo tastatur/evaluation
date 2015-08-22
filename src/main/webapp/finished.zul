@@ -7,7 +7,7 @@
            ListModelList enginesModel = new ListModelList(engines);
         ]]>
     </zscript>
-    <borderlayout apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.unidue.evaluation.webapp.impl.viewmodels.EngineViewModel')">
+    <borderlayout apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.unidue.evaluation.webapp.impl.viewmodels.FinishedViewModel')">
         <north sclass="header" height="50px">
             <label sclass="header-text" multiline="true">
                 Du hast alle Engines bewertet.

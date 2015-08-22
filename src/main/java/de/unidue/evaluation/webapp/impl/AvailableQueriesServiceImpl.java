@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service("availableQueriesService")
@@ -35,18 +35,29 @@ public class AvailableQueriesServiceImpl implements AvailableQueriesService {
         });
     }
 
-    @Override
-    public List<String> getPoliticalQueries() {
+    private List<String> getPoliticalQueries() {
         return politicalQueries;
     }
 
-    @Override
-    public List<String> getMiscQueries() {
+    private List<String> getMiscQueries() {
         return miscQueries;
     }
 
-    @Override
-    public List<String> getWikiQueries() {
+    private List<String> getWikiQueries() {
         return wikiQueries;
+    }
+
+    @Override
+    public List<String> getQueriesForSearchDomain(String searchDomain) {
+        switch (searchDomain) {
+            case "politic":
+                return getPoliticalQueries();
+            case "wiki":
+                return getWikiQueries();
+            case "misc":
+                return getMiscQueries();
+            default:
+                throw new InvalidParameterException();
+        }
     }
 }
