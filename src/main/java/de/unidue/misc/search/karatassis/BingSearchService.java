@@ -7,6 +7,8 @@ package de.unidue.misc.search.karatassis;
 
 import org.primefaces.json.JSONArray;
 import org.primefaces.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -21,6 +23,7 @@ import java.util.Map;
  * This class represents a service that connects to the bing search api for
  * retrieving search results.
  */
+@Component("searchService")
 public final class BingSearchService {
 
     private static final String ID = "ID";
@@ -29,22 +32,10 @@ public final class BingSearchService {
     private static final String URL = "Url";
     private static final String DESCRIPTION = "Description";
 
-    private static BingSearchService instance;
     private static final String BASE_URL = "https://api.datamarket.azure.com/Bing/Search/v1/Web";
 
-    private BingSearchService() {
-    }
-
-    /**
-     * @return the instance
-     */
-    public static synchronized BingSearchService getInstance() {
-        if (instance == null) {
-            instance = new BingSearchService();
-        }
-        return instance;
-    }
-
+    @Value("${de.unidue.search.api.key}")
+    private String accountKey;
 
     public List<BingWebResult> executeSearchQuery(final String query) throws Exception {
         final String finalBingUrl = generateBingUrl(query);
@@ -80,7 +71,7 @@ public final class BingSearchService {
         JSONObject json;
         URL url = new URL(site);
         URLConnection connection = url.openConnection();
-        for (Map.Entry<String, String> field : BingUtils.getHeaderFields().entrySet()) {
+        for (Map.Entry<String, String> field : BingUtils.getHeaderFields(accountKey).entrySet()) {
             connection.setRequestProperty(field.getKey(), field.getValue());
         }
         String jsonString = StreamUtils.convertStreamToString(connection.getInputStream());

@@ -1,0 +1,7 @@
+{ "_id" : { "$oid" : "55d56917a0eca54146020920" }, "query" : "Geburtstag von Angela Merkel", "type" : "politic" }
+{ "_id" : { "$oid" : "55d56928a0eca54146020921" }, "query" : "Größte Diktator Ugandas", "type" : "politic" }
+{ "_id" : { "$oid" : "55d56935a0eca54146020922" }, "query" : "Unruhen in China 80er", "type" : "politic" }
+{ "_id" : { "$oid" : "55d58653f8c31bb410b50433" }, "query" : "Erfinder von Windows98", "type" : "wiki" }
+{ "_id" : { "$oid" : "55d5865ef8c31bb410b50434" }, "query" : "Wie alt ist Steve Jobs?", "type" : "wiki" }
+{ "_id" : { "$oid" : "55d58673f8c31bb410b50435" }, "query" : "Wie groß ist das indische Ozean?", "type" : "wiki" }
+{ "_id" : { "$oid" : "55d5869bf8c31bb410b50436" }, "query" : "Donald Duck", "type" : "misc" }

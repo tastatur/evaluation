@@ -9,10 +9,12 @@ import de.unidue.proxyapi.connection.EnhancementClient;
 import de.unidue.proxyapi.connection.impl.StanbolClient;
 import de.unidue.proxyapi.data.entities.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,11 +24,21 @@ import java.util.Map;
 @Scope(value = "singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class EntityExtractionServiceImpl implements EntityExtractionService {
 
-    private final EnhancementClient stanbolClient = StanbolClient.getInstance();
-    private final BingSearchService searchService = BingSearchService.getInstance();
+    private EnhancementClient stanbolClient;
+
+    @Autowired
+    private BingSearchService searchService;
 
     @Autowired
     private EvaluationSessionService evaluationSessionService;
+
+    @Value("${de.unidue.stanbol.address}")
+    private String stanbolAdress;
+
+    @PostConstruct
+    public void setupStanbolClient() {
+        stanbolClient = new StanbolClient(stanbolAdress);
+    }
 
     @Override
     public List<EntityExtractionRepresentation> getEntitiesForSearchQuery(String searchQuery) throws Exception {

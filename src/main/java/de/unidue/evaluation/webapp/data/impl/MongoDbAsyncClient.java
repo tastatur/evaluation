@@ -9,6 +9,7 @@ import de.unidue.evaluation.webapp.data.MongoDbCLient;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -17,15 +18,16 @@ import javax.annotation.PostConstruct;
 public class MongoDbAsyncClient implements MongoDbCLient {
 
     private static final Logger log = LoggerFactory.getLogger(MongoDbAsyncClient.class);
-
-    private static final String MONGO_CONNECTION_STRING = System.getProperty("de.unidue.mongoaddress");
     private static final String DATABASE_NAME = "evaluation";
+
+    @Value("${de.unidue.mongoaddress}")
+    private String mongoConnectionString;
 
     private MongoDatabase mongoDatabase;
 
     @PostConstruct
     public void initDbClient() {
-        final MongoClient mongoClient = MongoClients.create(MONGO_CONNECTION_STRING);
+        final MongoClient mongoClient = MongoClients.create(mongoConnectionString);
         mongoDatabase = mongoClient.getDatabase(DATABASE_NAME);
         createIndexesIfNotExist();
     }

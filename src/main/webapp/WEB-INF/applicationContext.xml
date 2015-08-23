@@ -8,5 +8,6 @@
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <context:component-scan base-package="de.unidue.evaluation.webapp" />
-
+    <context:component-scan base-package="de.unidue.misc" />
+    <context:property-placeholder location="classpath:evaluation.properties"/>
 </beans>

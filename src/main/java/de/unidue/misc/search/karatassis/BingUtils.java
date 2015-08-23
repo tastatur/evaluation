@@ -15,20 +15,17 @@ import java.util.Map;
  * A bing utility class
  */
 public class BingUtils {
-
-    public static final String ACCOUNT_KEY = System.getProperty("de.unidue.search.api.key");
-
     /**
      * @return The header fields provided to the bing search API
      */
-    public static Map<String, String> getHeaderFields() throws UnsupportedEncodingException {
+    public static Map<String, String> getHeaderFields(final String accountKey) throws UnsupportedEncodingException {
         Map<String, String> fields = new HashMap<>();
-        fields.put("Authorization", getAuthentificationHeaderField());
+        fields.put("Authorization", getAuthentificationHeaderField(accountKey));
         return fields;
     }
 
-    private static String getAuthentificationHeaderField() throws UnsupportedEncodingException {
-        String encrypted = base64Encode(":" + ACCOUNT_KEY);
+    private static String getAuthentificationHeaderField(final String accountKey) throws UnsupportedEncodingException {
+        String encrypted = base64Encode(":" + accountKey);
         return "Basic " + encrypted;
     }
 
