@@ -66,6 +66,7 @@ public class EvalutionSessionServiceImpl implements EvaluationSessionService {
         final List<String> domains = domainPermutationService.getNextDomainPermutation();
         final Iterator<String> permutationIterator = Iterables.cycle(domains).iterator();
         Sessions.getCurrent().setAttribute(SessionAttributes.CURRENT_DOMAINS_PERMUTATION_ITER.name(), permutationIterator);
+        Sessions.getCurrent().setAttribute(SessionAttributes.CURRENT_QUESTION_DOMAIN.name(), getNextDomain());
     }
 
     @Override
@@ -77,6 +78,7 @@ public class EvalutionSessionServiceImpl implements EvaluationSessionService {
         final EnhancementEngine nextEngine = enhancementEngineService.getNextEngine(getCurrentEngine());
         if (nextEngine != null) {
             setCurrentEngine(nextEngine);
+            Sessions.getCurrent().setAttribute(SessionAttributes.CURRENT_QUESTION_DOMAIN.name(), getNextDomain());
         } else {
             finishEvaluation();
         }
@@ -90,9 +92,8 @@ public class EvalutionSessionServiceImpl implements EvaluationSessionService {
         setCurrentEngine(enhancementEngineService.getNextEngineForFinishedPage());
     }
 
-    @Override
     @SuppressWarnings("unchecked")
-    public String getNextDomain() {
+    private String getNextDomain() {
         if (isEvalutionRunning()) {
             final String domain;
             final Iterator<String> permutationIterator = (Iterator<String>) Sessions.getCurrent().getAttribute(SessionAttributes
@@ -104,6 +105,11 @@ public class EvalutionSessionServiceImpl implements EvaluationSessionService {
         }
 
         return null;
+    }
+
+    @Override
+    public String getCurrentDomain() {
+        return (String) Sessions.getCurrent().getAttribute(SessionAttributes.CURRENT_QUESTION_DOMAIN.name());
     }
 
     @Override

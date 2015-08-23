@@ -54,7 +54,7 @@ public class EngineViewModel implements Serializable {
 
     @Init
     public void init() {
-        searchDomain = evaluationSessonService.getNextDomain();
+        searchDomain = evaluationSessonService.getCurrentDomain();
     }
 
     @Command
@@ -98,7 +98,7 @@ public class EngineViewModel implements Serializable {
         } else {
             Clients.showNotification("Danke für die Bewertung, bitte bewerte jetzt nächsten Engine.");
             clearState();
-            searchDomain = evaluationSessonService.getNextDomain();
+            searchDomain = evaluationSessonService.getCurrentDomain();
         }
     }
 

@@ -51,11 +51,10 @@ public interface EvaluationSessionService {
     void finishEvaluation();
 
     /**
-     * Für welches Domain soll der nächste Evaluierungsschritt durchgeführt werden?
-     * Jeder Benutzer bekommt eine eigene Rheienfolge(Permutation) von Domains
+     * Der Domain, der jetzt evaluiert werden soll
      * @return Der Name des Domains
      */
-    String getNextDomain();
+    String getCurrentDomain();
 
     String getSessionId();
 }
