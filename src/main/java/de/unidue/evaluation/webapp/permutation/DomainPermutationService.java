@@ -4,8 +4,8 @@ import java.util.List;
 
 /**
  * Dieses Service ist für die Permutation von Domain zuständig:
- * Erste Benutzer bekommt die Permutation ["wiki", "politik", "misc"], der zweite -
- * ["misc", "wiki", "politik"] und so weiter
+ * Erste Benutzer bekommt die Permutation ["politik", "misc"], der zweite -
+ * ["misc", "politik"] und so weiter
  */
 public interface DomainPermutationService {
 

@@ -16,44 +16,34 @@ import java.util.List;
 @Scope(value = "singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class AvailableQueriesServiceImpl implements AvailableQueriesService {
 
-    private List<String> politicalQueries = new ArrayList<>();
+    private List<String> newspapersalQueries = new ArrayList<>();
     private List<String> miscQueries = new ArrayList<>();
-    private List<String> wikiQueries = new ArrayList<>();
 
     @Autowired
     private AvailableQueriesFromDatabaseService availableQueriesFromDatabaseService;
 
     @PostConstruct
     private void initQueries() {
-        availableQueriesFromDatabaseService.getPoliticalQueriesFromDb().forEach(document -> politicalQueries.add(document.getString("query")), (aVoid, throwable) -> {
-        });
-        availableQueriesFromDatabaseService.getWikiQueriesFromDb().forEach(document -> wikiQueries.add(document.getString("query")), (aVoid,
-                                                                                                                                     throwable) -> {
+        availableQueriesFromDatabaseService.getNewspapersQueriesFromDb().forEach(document -> newspapersalQueries.add(document.getString("query")), (aVoid, throwable) -> {
         });
         availableQueriesFromDatabaseService.getMiscQueriesFromDb().forEach(document -> miscQueries.add(document.getString("query")), (aVoid,
                                                                                                                                      throwable) -> {
         });
     }
 
-    private List<String> getPoliticalQueries() {
-        return politicalQueries;
+    private List<String> getNewspapersQueries() {
+        return newspapersalQueries;
     }
 
     private List<String> getMiscQueries() {
         return miscQueries;
     }
 
-    private List<String> getWikiQueries() {
-        return wikiQueries;
-    }
-
     @Override
     public List<String> getQueriesForSearchDomain(String searchDomain) {
         switch (searchDomain) {
-            case "politic":
-                return getPoliticalQueries();
-            case "wiki":
-                return getWikiQueries();
+            case "newspapers":
+                return getNewspapersQueries();
             case "misc":
                 return getMiscQueries();
             default:

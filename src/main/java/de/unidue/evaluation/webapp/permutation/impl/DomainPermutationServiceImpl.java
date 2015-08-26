@@ -16,7 +16,7 @@ import java.util.function.IntUnaryOperator;
 @Service("domainPermutationService")
 public class DomainPermutationServiceImpl implements DomainPermutationService {
 
-    private static final List<String> availableQueryDomains = Arrays.asList("politic", "wiki", "misc");
+    private static final List<String> availableQueryDomains = Arrays.asList("newspapers", "misc");
     private List<List<String>> availablePermutations;
     private AtomicInteger atomicPermutationIndex = new AtomicInteger(0);
     private IntUnaryOperator permutationIndexOperator;

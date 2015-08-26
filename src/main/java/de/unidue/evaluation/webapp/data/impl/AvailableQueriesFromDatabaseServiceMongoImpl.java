@@ -19,20 +19,14 @@ public class AvailableQueriesFromDatabaseServiceMongoImpl implements AvailableQu
     private MongoDbCLient mongoDbClient;
 
     @Override
-    public FindIterable<Document> getPoliticalQueriesFromDb() {
-        Document politicalQuerieSearch = new Document().append("type", "politic");
-        return mongoDbClient.findDocuments(AVAILABLE_QUERIES_COLLECTION, politicalQuerieSearch);
-    }
-
-    @Override
-    public FindIterable<Document> getWikiQueriesFromDb() {
-        Document politicalQuerieSearch = new Document().append("type", "wiki");
-        return mongoDbClient.findDocuments(AVAILABLE_QUERIES_COLLECTION, politicalQuerieSearch);
+    public FindIterable<Document> getNewspapersQueriesFromDb() {
+        Document newspapersalQuerieSearch = new Document().append("type", "newspapers");
+        return mongoDbClient.findDocuments(AVAILABLE_QUERIES_COLLECTION, newspapersalQuerieSearch);
     }
 
     @Override
     public FindIterable<Document> getMiscQueriesFromDb() {
-        Document politicalQuerieSearch = new Document().append("type", "misc");
-        return mongoDbClient.findDocuments(AVAILABLE_QUERIES_COLLECTION, politicalQuerieSearch);
+        Document newspapersalQuerieSearch = new Document().append("type", "misc");
+        return mongoDbClient.findDocuments(AVAILABLE_QUERIES_COLLECTION, newspapersalQuerieSearch);
     }
 }

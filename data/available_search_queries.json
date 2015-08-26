@@ -1,7 +1,23 @@
-{ "_id" : { "$oid" : "55d56917a0eca54146020920" }, "query" : "Geburtstag von Angela Merkel", "type" : "politic" }
-{ "_id" : { "$oid" : "55d56928a0eca54146020921" }, "query" : "Größte Diktator Ugandas", "type" : "politic" }
-{ "_id" : { "$oid" : "55d56935a0eca54146020922" }, "query" : "Unruhen in China 80er", "type" : "politic" }
-{ "_id" : { "$oid" : "55d58653f8c31bb410b50433" }, "query" : "Erfinder von Windows98", "type" : "wiki" }
-{ "_id" : { "$oid" : "55d5865ef8c31bb410b50434" }, "query" : "Wie alt ist Steve Jobs?", "type" : "wiki" }
-{ "_id" : { "$oid" : "55d58673f8c31bb410b50435" }, "query" : "Wie groß ist das indische Ozean?", "type" : "wiki" }
-{ "_id" : { "$oid" : "55d5869bf8c31bb410b50436" }, "query" : "Donald Duck", "type" : "misc" }
+{"query" : "Geburtstag von Angela Merkel", "type" : "newspapers" }
+{"query" : "Größte Diktator Ugandas", "type" : "newspapers" }
+{"query" : "Präsident von USA", "type" : "newspapers" }
+{"query" : "Was hat Snowden gemacht", "type" : "newspapers" }
+{"query" : "Wer ist Donald Trump", "type" : "newspapers" }
+{"query" : "CDU Vorsitzender", "type" : "newspapers" }
+{"query" : "Die Linke", "type" : "newspapers" }
+{"query" : "ISIS", "type" : "newspapers" }
+{"query" : "NSA Affäre", "type" : "newspapers" }
+{"query" : "Austrit aus der EU", "type" : "newspapers" }
+{"query" : "Wann wurde Europäische Union gegründet", "type" : "newspapers" }
+
+{"query" : "Wann ist Steve Jobs gestorben", "type" : "misc" }
+{"query" : "CEO von Microsoft", "type" : "misc" }
+{"query" : "CEO von Oracle", "type" : "misc" }
+{"query" : "Amtssprache von Algerien", "type" : "misc" }
+{"query" : "Kanada Vorwahl", "type" : "misc" }
+{"query" : "Wie alt ist Bill Gates", "type" : "misc" }
+{"query" : "Hauptstadt von Iran", "type" : "misc" }
+{"query" : "Hat Indien einen König?", "type" : "misc" }
+{"query" : "Niederlanden Staatsform", "type" : "misc" }
+{"query" : "Wie groß ist der Indische Ozean?", "type" : "misc" }
+{"query" : "Wer erfand Tetris?", "type" : "misc" }

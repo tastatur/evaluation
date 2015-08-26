@@ -78,7 +78,8 @@ public class EngineViewModel implements Serializable {
         snippetsBox.addEventListener(Events.ON_CLIENT_INFO, event -> {
             snippets = entityExtractionService.getEntitiesForSearchQuery(getSearchQuery());
             if (logRequest) {
-                queryLogService.addQueryLog(evaluationSessonService.getSessionId(), getSearchQuery());
+                queryLogService.addQueryLog(evaluationSessonService.getSessionId(), getSearchQuery(),
+                        evaluationSessonService.getCurrentEngine().toString());
             }
             Clients.clearBusy();
             selectedSnippet = null;

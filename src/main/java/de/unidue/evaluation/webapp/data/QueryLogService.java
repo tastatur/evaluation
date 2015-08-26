@@ -5,5 +5,5 @@ package de.unidue.evaluation.webapp.data;
  */
 public interface QueryLogService {
 
-    void addQueryLog(final String sessionId, final String query);
+    void addQueryLog(final String sessionId, final String query, String engine);
 }

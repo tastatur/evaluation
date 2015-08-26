@@ -8,9 +8,7 @@ import org.bson.Document;
  */
 public interface AvailableQueriesFromDatabaseService {
 
-    FindIterable<Document> getPoliticalQueriesFromDb();
-
-    FindIterable<Document> getWikiQueriesFromDb();
+    FindIterable<Document> getNewspapersQueriesFromDb();
 
     FindIterable<Document> getMiscQueriesFromDb();
 }

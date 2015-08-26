@@ -18,9 +18,10 @@ public class QueryLogServiceMongoImpl implements QueryLogService {
     private MongoDbCLient mongoDbClient;
 
     @Override
-    public void addQueryLog(String sessionId, String query) {
+    public void addQueryLog(String sessionId, String query, String engine) {
         final Document queryLog = new Document().append("session", sessionId)
-                .append("query", query);
+                .append("query", query)
+                .append("engine", engine);
         mongoDbClient.saveDocument(QUERY_LOGS_COLLECTION, queryLog);
     }
 }
