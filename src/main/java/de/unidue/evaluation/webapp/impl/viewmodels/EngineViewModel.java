@@ -4,8 +4,8 @@ import de.unidue.evaluation.webapp.AvailableQueriesService;
 import de.unidue.evaluation.webapp.EntityExtractionService;
 import de.unidue.evaluation.webapp.EvaluationSessionService;
 import de.unidue.evaluation.webapp.data.EngineRatingService;
-import de.unidue.evaluation.webapp.data.EntityExtractionRepresentation;
 import de.unidue.evaluation.webapp.data.QueryLogService;
+import de.unidue.proxyapi.data.EnhancementResultEntry;
 import de.unidue.proxyapi.data.entities.Entity;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
@@ -32,8 +32,8 @@ public class EngineViewModel implements Serializable {
     private Integer helpQualityOfEngine = 3;
 
     private String searchQuery;
-    private List<EntityExtractionRepresentation> snippets = new ArrayList<>();
-    private EntityExtractionRepresentation selectedSnippet = new EntityExtractionRepresentation();
+    private List<EnhancementResultEntry> snippets = new ArrayList<>();
+    private EnhancementResultEntry selectedSnippet = null;
     private Entity selectedEntity;
     private String searchDomain;
 
@@ -76,7 +76,7 @@ public class EngineViewModel implements Serializable {
     public void extractEntities(@BindingParam("snippetsBox") Listbox snippetsBox, @BindingParam("logRequest") Boolean logRequest) throws Exception {
         Clients.showBusy("Suche nach Entitäten...");
         snippetsBox.addEventListener(Events.ON_CLIENT_INFO, event -> {
-            snippets = entityExtractionService.getEntitiesForSearchQuery(getSearchQuery());
+            snippets = entityExtractionService.getEntitiesForSearchQuery(getSearchQuery()).getEnhancementResults();
             if (logRequest) {
                 queryLogService.addQueryLog(evaluationSessonService.getSessionId(), getSearchQuery(),
                         evaluationSessonService.getCurrentEngine().toString());
@@ -121,19 +121,19 @@ public class EngineViewModel implements Serializable {
         this.searchQuery = searchQuery;
     }
 
-    public List<EntityExtractionRepresentation> getSnippets() {
+    public List<EnhancementResultEntry> getSnippets() {
         return snippets;
     }
 
-    public void setSnippets(List<EntityExtractionRepresentation> snippets) {
+    public void setSnippets(List<EnhancementResultEntry> snippets) {
         this.snippets = snippets;
     }
 
-    public EntityExtractionRepresentation getSelectedSnippet() {
+    public EnhancementResultEntry getSelectedSnippet() {
         return selectedSnippet;
     }
 
-    public void setSelectedSnippet(EntityExtractionRepresentation selectedSnippet) {
+    public void setSelectedSnippet(EnhancementResultEntry selectedSnippet) {
         this.selectedSnippet = selectedSnippet;
     }
 

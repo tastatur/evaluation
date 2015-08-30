@@ -2,12 +2,13 @@ package de.unidue.evaluation.webapp.impl;
 
 import de.unidue.evaluation.webapp.EntityExtractionService;
 import de.unidue.evaluation.webapp.EvaluationSessionService;
-import de.unidue.evaluation.webapp.data.EntityExtractionRepresentation;
 import de.unidue.misc.search.karatassis.BingSearchService;
 import de.unidue.misc.search.karatassis.BingWebResult;
 import de.unidue.proxyapi.connection.EnhancementClient;
 import de.unidue.proxyapi.connection.impl.StanbolClient;
-import de.unidue.proxyapi.data.entities.Entity;
+import de.unidue.proxyapi.data.EnhancementResults;
+import de.unidue.proxyapi.data.SearchSnippet;
+import de.unidue.proxyapi.data.SearchSnippets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -15,10 +16,9 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 @Service("entityExtractionService")
 @Scope(value = "singleton", proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -41,26 +41,20 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
     }
 
     @Override
-    public List<EntityExtractionRepresentation> getEntitiesForSearchQuery(String searchQuery) throws Exception {
+    public EnhancementResults getEntitiesForSearchQuery(String searchQuery) throws Exception {
         final List<BingWebResult> searchResults = searchService.executeSearchQuery(searchQuery);
-        final Map<String, String> snippets = new HashMap<>();
-        searchResults.forEach(bingSnippet -> snippets.put(bingSnippet.getUrl(), bingSnippet.getDescription()));
+        final SearchSnippets snippets = new SearchSnippets();
+        searchResults.stream().map(bingSearchResult -> {
+            try {
+                final URL siteUrl = new URL(bingSearchResult.getUrl());
+                final String snippetText = bingSearchResult.getDescription();
+                return new SearchSnippet(siteUrl, snippetText);
+            } catch (MalformedURLException ex) {
+                getLogger().error("Ich kann keine Entitäten extrahieren", ex);
+                return null;
+            }
+        }).forEach(snippets::addSearchSnippet);
 
-        final Map<String, List<Entity>> entitiesInSearchResults = stanbolClient.filterEmptyResults(stanbolClient.getEntitiesForSnippets(snippets,
-                evaluationSessionService.getCurrentEngine()));
-
-        return transformApiResultsForView(snippets, entitiesInSearchResults);
-    }
-
-    private List<EntityExtractionRepresentation> transformApiResultsForView(Map<String, String> snippets, Map<String, List<Entity>> entitesInSearchResults) {
-        final List<EntityExtractionRepresentation> extractedEntities = new ArrayList<>();
-        entitesInSearchResults.forEach((url, entities) -> {
-            final EntityExtractionRepresentation extractionResult = new EntityExtractionRepresentation();
-            extractionResult.setSiteUrl(url);
-            extractionResult.setSnippetText(snippets.get(url));
-            extractionResult.setExtractedEntities(entities);
-            extractedEntities.add(extractionResult);
-        });
-        return extractedEntities;
+        return stanbolClient.getEntitiesForSnippets(snippets, evaluationSessionService.getCurrentEngine());
     }
 }
