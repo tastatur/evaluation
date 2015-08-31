@@ -1,7 +1,9 @@
 package de.unidue.evaluation.webapp.impl;
 
+import com.hp.hpl.jena.util.iterator.Filter;
 import de.unidue.evaluation.webapp.EntityExtractionService;
 import de.unidue.evaluation.webapp.EvaluationSessionService;
+import de.unidue.evaluation.webapp.data.impl.AllUserRelevantPropsPredicate;
 import de.unidue.misc.search.karatassis.BingSearchService;
 import de.unidue.misc.search.karatassis.BingWebResult;
 import de.unidue.proxyapi.connection.EnhancementClient;
@@ -9,6 +11,8 @@ import de.unidue.proxyapi.connection.impl.StanbolClient;
 import de.unidue.proxyapi.data.EnhancementResults;
 import de.unidue.proxyapi.data.SearchSnippet;
 import de.unidue.proxyapi.data.SearchSnippets;
+import de.unidue.proxyapi.data.entities.EntityProperty;
+import de.unidue.proxyapi.util.impl.UserRelevantDataFilterUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -25,6 +29,7 @@ import java.util.List;
 public class EntityExtractionServiceImpl implements EntityExtractionService {
 
     private EnhancementClient stanbolClient;
+    private final Filter<EntityProperty> relevantPropsFilter = new AllUserRelevantPropsPredicate();
 
     @Autowired
     private BingSearchService searchService;
@@ -55,6 +60,6 @@ public class EntityExtractionServiceImpl implements EntityExtractionService {
             }
         }).forEach(snippets::addSearchSnippet);
 
-        return stanbolClient.getEntitiesForSnippets(snippets, evaluationSessionService.getCurrentEngine());
+        return UserRelevantDataFilterUtil.filterProps(stanbolClient.getEntitiesForSnippets(snippets, evaluationSessionService.getCurrentEngine()), relevantPropsFilter);
     }
 }
