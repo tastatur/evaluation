@@ -6,7 +6,7 @@
             <borderlayout vflex="1">
                 <north sclass="header" vflex="min">
                     <label sclass="header-text" multiline="true">
-                        In dem linken Reiter kannst du oben das erwünschte Themagebiet auswählen, und die Anfrage, die du austesten möchtest,
+                        In dem linken Reiter kannst du oben die Anfrage, die du austesten möchtest, auswählen
                         und unten kannst du das Engine bewerten und zum nächsten wechseln.
                     </label>
                 </north>
@@ -20,6 +20,7 @@
                         </selectbox>
                         <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets, logRequest=false)"
                                 autodisable="self"/>
+                        <separator bar="true"/>
                         <label>Bitte bewerte das Engine.</label>
 
                         <label>Wie gut war die Qualität von extrahierten Entitäten? Haben die zu der Suchanfrage gepasst? Waren das die Entitäten, die
@@ -33,7 +34,6 @@
                             <radio label="4"/>
                             <radio label="5"/>
                         </radiogroup>
-                        <separator bar="true"/>
 
                         <label>Wie gut hat das Engine dir bei der Suche helfen können? (Wie hilfreich war der Einsatz der Extraktion von Entitäten
                             generell?)
