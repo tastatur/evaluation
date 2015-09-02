@@ -57,4 +57,10 @@ public interface EvaluationSessionService {
     String getCurrentDomain();
 
     String getSessionId();
+
+    /**
+     * Ein Benutzer kann den Feedback nmur ein mal abgeben
+     */
+    void toggleFeedbackWasSent();
+    Boolean isFeedbackWasSent();
 }

@@ -116,4 +116,19 @@ public class EvalutionSessionServiceImpl implements EvaluationSessionService {
     public String getSessionId() {
         return ((HttpSession) Sessions.getCurrent().getNativeSession()).getId();
     }
+
+    @Override
+    public void toggleFeedbackWasSent() {
+        Sessions.getCurrent().setAttribute(SessionAttributes.FEEDBACK_WAS_SENT_FLAG.name(), true);
+    }
+
+    @Override
+    public Boolean isFeedbackWasSent() {
+        Boolean feedbackWasSent = false;
+        final Object feedbackFlag = Sessions.getCurrent().getAttribute(SessionAttributes.FEEDBACK_WAS_SENT_FLAG.name());
+        if (feedbackFlag != null) {
+            feedbackWasSent = (Boolean) feedbackFlag;
+        }
+        return feedbackWasSent;
+    }
 }

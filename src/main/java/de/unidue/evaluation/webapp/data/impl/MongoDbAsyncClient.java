@@ -35,7 +35,10 @@ public class MongoDbAsyncClient implements MongoDbCLient {
     private void createIndexesIfNotExist() {
         Document ratingsIndex = new Document().append("session", 1).append("engine", 1);
         mongoDatabase.getCollection("ratings").createIndex(ratingsIndex, new IndexOptions().unique(true),
-                (s, throwable) -> log.debug("Index wurde erzeugt"));
+                (s, throwable) -> log.debug("Index für ratings wurde erzeugt"));
+        Document feetbackIndex = new Document().append("session", 1);
+        mongoDatabase.getCollection("feedbacks").createIndex(feetbackIndex, new IndexOptions().unique(true),
+                (s, throwable) -> log.debug("Index für feedbacks wurde auch erzeugt"));
     }
 
     @Override

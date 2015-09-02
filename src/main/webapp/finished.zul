@@ -16,6 +16,12 @@
                         <textbox value="@save(vm.searchQuery)"/>
                         <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets, logRequest=true)"
                                 autodisable="self"/>
+
+                        <separator bar="true"/>
+                        <label>Falls Du möchtest, kannst du auch einen Feedback geben: was hat dir gefallen, was nicht, und was könnte
+                        deiner Meinung nach verbessert werden</label>
+                        <textbox value="@save(vm.feedbackText)" multiline="true"/>
+                        <button label="Feedback abschicken" onClick="@command('sendFeedback')"/>
                     </vlayout>
                 </west>
                 <center sclass="nested-center">

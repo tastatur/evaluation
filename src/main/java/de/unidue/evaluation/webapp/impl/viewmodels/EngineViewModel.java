@@ -4,6 +4,7 @@ import de.unidue.evaluation.webapp.AvailableQueriesService;
 import de.unidue.evaluation.webapp.EntityExtractionService;
 import de.unidue.evaluation.webapp.EvaluationSessionService;
 import de.unidue.evaluation.webapp.data.EngineRatingService;
+import de.unidue.evaluation.webapp.data.FeedbackService;
 import de.unidue.evaluation.webapp.data.QueryLogService;
 import de.unidue.proxyapi.data.EnhancementResultEntry;
 import de.unidue.proxyapi.data.entities.Entity;
@@ -36,6 +37,7 @@ public class EngineViewModel implements Serializable {
     private EnhancementResultEntry selectedSnippet = null;
     private Entity selectedEntity;
     private String searchDomain;
+    private String feedbackText;
 
     @WireVariable
     private AvailableQueriesService availableQueriesService;
@@ -51,6 +53,9 @@ public class EngineViewModel implements Serializable {
 
     @WireVariable
     private QueryLogService queryLogService;
+
+    @WireVariable
+    private FeedbackService feedbackService;
 
     @Init
     public void init() {
@@ -103,6 +108,17 @@ public class EngineViewModel implements Serializable {
         }
     }
 
+    @Command
+    public void sendFeedback() {
+        if (evaluationSessonService.isFeedbackWasSent()) {
+            Clients.showNotification("Du hast den Feedback schon abgegeben");
+            return;
+        }
+        feedbackService.sendFeedback(evaluationSessonService.getSessionId(), feedbackText);
+        evaluationSessonService.toggleFeedbackWasSent();
+        Clients.showNotification("Dein Feedback wurde erfolgreich gespeichert");
+    }
+
     protected void clearState() {
         snippets.clear();
         selectedSnippet = null;
@@ -143,5 +159,9 @@ public class EngineViewModel implements Serializable {
 
     public void setSelectedEntity(Entity selectedEntity) {
         this.selectedEntity = selectedEntity;
+    }
+
+    public void setFeedbackText(final String feedbackText) {
+        this.feedbackText = feedbackText;
     }
 }
