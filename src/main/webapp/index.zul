@@ -2,7 +2,7 @@
 <?link rel="stylesheet" type="text/css" href="/style.css"?>
 <zk>
     <borderlayout apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('de.unidue.evaluation.webapp.impl.viewmodels.IntroViewModel')">
-        <center>
+        <center style="overflow:scroll;">
             <vlayout>
                 <label multiline="true">
                     Herzlich willkommen in die Evaluierung der Extraktion von Entitäten aus Suchergebnisseiten!
