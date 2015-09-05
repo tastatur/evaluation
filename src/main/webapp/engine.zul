@@ -21,7 +21,9 @@
                         <button label="Suchanfrage abschicken" onClick="@command('extractEntities', snippetsBox=foundSnippets, logRequest=false)"
                                 autodisable="self"/>
                         <separator bar="true"/>
-                        <label>Bitte bewerte das Engine.</label>
+                        <label multiline="true">Bitte bewerte das Engine.
+                            Eine '1' heißt, dass du mit dem zu bewertenden Merkmal völlig unzufrieden warst, und eine '5' heißt, dass das Engine seine Arbeit sehr gut gemacht hat.
+                        </label>
 
                         <label>Wie gut war die Qualität von extrahierten Entitäten? Haben die zu der Suchanfrage gepasst? Waren das die Entitäten, die
                             du auch
