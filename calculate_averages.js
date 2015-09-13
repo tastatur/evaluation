@@ -1,0 +1,1 @@
+db.ratings.aggregate([{$group: {_id: "$engine", avghelpQuality: {$avg: "$helpQuality"}, avgqualityRating_misc: {$avg: "$qualityRating_misc"}, avgqualityRating_newspapers: {$avg: "$qualityRating_newspapers"}, avgspeedRating: {$avg: "$speedRating"}}}])
